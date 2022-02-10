@@ -1,9 +1,13 @@
 {
     "name": "ezsystems/legacy-bridge",
-    "description": "eZ Platform bridge to eZ Publish Legacy",
+    "description": "Ibexa bridge to eZ Publish Legacy",
     "license": "GPL-2.0",
     "type": "ezplatform-bundle",
     "authors": [
+        {
+            "name": "Netgen",
+            "website": "https://netgen.io"
+        },
         {
             "name": "eZ Systems",
             "email": "dev-team@ez.no"
@@ -11,12 +15,11 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "ezsystems/ezpublish-legacy-installer": "^2.0.4",
-        "ezsystems/ezpublish-legacy": "^2019.03",
-        "ezsystems/ezpublish-kernel": "^7.5.24",
-        "ezsystems/ezplatform-xmltext-fieldtype": "^1.8",
-        "sensio/distribution-bundle": "^5.0.24",
-        "twig/twig": "^1.35 || ^2.5"
+        "ezsystems/ezpublish-legacy-installer": "^2.1",
+        "ezsystems/ezpublish-legacy": "^2019.03.6",
+        "ezsystems/ezplatform-kernel": "^1.3.13",
+        "ezsystems/ezplatform-xmltext-fieldtype": "^2.0.2",
+        "twig/twig": "^2.12 || ^3.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16.2",
@@ -39,7 +42,7 @@
     "extra": {
         "ezpublish-legacy-dir": "ezpublish_legacy",
         "branch-alias": {
-            "dev-master": "2.1.x-dev"
+            "dev-master": "3.0.x-dev"
         }
     }
 }
