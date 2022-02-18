@@ -6,6 +6,7 @@
  */
 namespace eZ\Bundle\EzPublishLegacyBundle\LegacyMapper;
 
+use Doctrine\DBAL\Connection;
 use eZ\Publish\Core\FieldType\Image\AliasCleanerInterface;
 use eZ\Publish\Core\MVC\Legacy\LegacyEvents;
 use eZ\Publish\Core\MVC\Legacy\Event\PreBuildKernelEvent;
@@ -13,7 +14,6 @@ use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use EzSystems\PlatformHttpCacheBundle\PurgeClient\PurgeClientInterface;
 use eZ\Bundle\EzPublishLegacyBundle\Cache\PersistenceCachePurger;
 use eZ\Publish\Core\MVC\Symfony\Routing\Generator\UrlAliasGenerator;
-use eZ\Publish\Core\Persistence\Database\DatabaseHandler;
 use ezpEvent;
 use ezxFormToken;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -49,9 +49,9 @@ class Configuration implements EventSubscriberInterface
     private $urlAliasGenerator;
 
     /**
-     * @var \eZ\Publish\Core\Persistence\Database\DatabaseHandler
+     * @var \Doctrine\DBAL\Connection
      */
-    private $legacyDbHandler;
+    private $dbConnection;
 
     /**
      * @var array
@@ -75,7 +75,7 @@ class Configuration implements EventSubscriberInterface
         PurgeClientInterface $purgeClient,
         PersistenceCachePurger $persistenceCachePurger,
         UrlAliasGenerator $urlAliasGenerator,
-        DatabaseHandler $legacyDbHandler,
+        Connection $dbConnection,
         AliasCleanerInterface $aliasCleaner,
         array $options = []
     ) {
@@ -83,7 +83,7 @@ class Configuration implements EventSubscriberInterface
         $this->purgeClient = $purgeClient;
         $this->persistenceCachePurger = $persistenceCachePurger;
         $this->urlAliasGenerator = $urlAliasGenerator;
-        $this->legacyDbHandler = $legacyDbHandler;
+        $this->dbConnection = $dbConnection;
         $this->aliasCleaner = $aliasCleaner;
         $this->options = $options;
     }
@@ -116,7 +116,7 @@ class Configuration implements EventSubscriberInterface
             return;
         }
 
-        $databaseSettings = $this->legacyDbHandler->getConnection()->getParams();
+        $databaseSettings = $this->dbConnection->getParams();
         $settings = [];
         foreach (
             [

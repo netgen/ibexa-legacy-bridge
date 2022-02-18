@@ -17,11 +17,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class LegacyBundles implements EventSubscriberInterface
 {
     /**
-     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
-     */
-    private $configResolver;
-
-    /**
      * @var array
      */
     private $options;
@@ -33,11 +28,8 @@ class LegacyBundles implements EventSubscriberInterface
      */
     private $enabled = true;
 
-    public function __construct(
-        ConfigResolverInterface $configResolver,
-        array $options = []
-    ) {
-        $this->configResolver = $configResolver;
+    public function __construct(array $options = [])
+    {
         $this->options = $options;
     }
 

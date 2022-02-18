@@ -29,15 +29,6 @@ services:
             # to match the location first, in case it exists in the view
             - {name: ezpublish.view_provider, type: 'eZ\Publish\Core\MVC\Symfony\View\ContentView', priority: 5}
 
-    ezpublish_legacy.block_view_provider:
-        class: eZ\Publish\Core\MVC\Legacy\View\Provider\Block
-        parent: ezpublish_legacy.view_provider
-        public: false
-        calls:
-            - [setPageService, ["@ezpublish.fieldType.ezpage.pageService"]]
-        tags:
-            - {name: ezpublish.view_provider, type: 'eZ\Publish\Core\MVC\Symfony\View\BlockView', priority: 5}
-
     ezpublish_legacy.view_decorator.twig:
         class: eZ\Publish\Core\MVC\Legacy\View\TwigContentViewLayoutDecorator
         public: false

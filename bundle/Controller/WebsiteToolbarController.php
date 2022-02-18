@@ -94,7 +94,7 @@ class WebsiteToolbarController extends Controller
                 'object' => $previewedContent,
                 'version' => $previewedVersionInfo,
                 'language' => $previewedVersionInfo->initialLanguageCode,
-                'is_creator' => $previewedVersionInfo->creatorId === $this->getRepository()->getCurrentUser()->id,
+                'is_creator' => $previewedVersionInfo->creatorId === $this->getRepository()->getPermissionResolver()->getCurrentUserReference()->getUserId(),
             ];
         } elseif ($locationId === null) {
             return $response;

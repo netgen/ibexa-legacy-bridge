@@ -10,6 +10,7 @@ use eZ\Publish\Core\MVC\Legacy\Event\PreBuildKernelEvent;
 use eZ\Publish\Core\MVC\Legacy\LegacyEvents;
 use eZ\Publish\Core\MVC\Symfony\RequestStackAware;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
 
@@ -65,7 +66,8 @@ class Session implements EventSubscriberInterface
             'has_previous' => false,
             'storage' => false,
         ];
-        if (isset($this->session)) {
+
+        if ($this->session !== null) {
             $request = $this->getCurrentRequest();
             $sessionInfos['configured'] = true;
             $sessionInfos['name'] = $this->session->getName();

@@ -24,14 +24,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class EzPublishLegacyBundle extends Bundle
 {
-    /** @var KernelInterface */
-    private $kernel;
-
-    public function __construct(KernelInterface $kernel)
-    {
-        $this->kernel = $kernel;
-    }
-
     public function boot()
     {
         if (!$this->container->getParameter('ezpublish_legacy.enabled')) {
@@ -52,7 +44,7 @@ class EzPublishLegacyBundle extends Bundle
         $container->addCompilerPass(new RelatedSiteAccessesCleanupPass(), PassConfig::TYPE_OPTIMIZE);
         $container->addCompilerPass(new LegacyPass());
         $container->addCompilerPass(new TwigPass());
-        $container->addCompilerPass(new LegacyBundlesPass($this->kernel));
+        $container->addCompilerPass(new LegacyBundlesPass());
         $container->addCompilerPass(new RoutingPass());
         $container->addCompilerPass(new LegacySessionPass());
         $container->addCompilerPass(new RememberMeListenerPass());

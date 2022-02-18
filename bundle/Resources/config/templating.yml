@@ -74,6 +74,26 @@ services:
         public: false
         arguments: ["@ezpublish_legacy.kernel", "@ezpublish_legacy.templating.object_converter"]
 
+    templating.engine.twig:
+        class: eZ\Publish\Core\MVC\Legacy\Templating\TwigEngine
+        public: false
+        arguments: ["@twig", "@templating.name_parser"]
+
+    templating.engine.delegating:
+        class: eZ\Publish\Core\MVC\Legacy\Templating\DelegatingEngine
+        public: false
+        calls:
+            - [addEngine, ["@templating.engine.twig"]]
+            - [addEngine, ["@templating.engine.eztpl"]]
+
+    templating:
+        alias: templating.engine.delegating
+
+    templating.name_parser:
+        class: eZ\Publish\Core\MVC\Legacy\Templating\TemplateNameParser
+        public: false
+        arguments: ["@kernel"]
+
     twig.loader.string:
         class: eZ\Publish\Core\MVC\Legacy\Templating\Twig\LoaderString
         public: false

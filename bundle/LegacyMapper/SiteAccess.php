@@ -10,20 +10,24 @@ use eZ\Publish\Core\MVC\Legacy\LegacyEvents;
 use eZ\Publish\Core\MVC\Legacy\Event\PreBuildKernelWebHandlerEvent;
 use eZ\Publish\Core\MVC\Symfony\SiteAccess\Matcher\CompoundInterface;
 use eZSiteAccess;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use eZ\Publish\Core\MVC\Symfony\SiteAccess as CoreSiteAccess;
 
 /**
  * Maps the SiteAccess object to the legacy parameters.
  */
 class SiteAccess implements EventSubscriberInterface
 {
-    use ContainerAwareTrait;
+    /**
+     * @var \eZ\Publish\Core\MVC\Symfony\SiteAccess
+     */
+    protected $siteAccess;
 
     protected $options = [];
 
-    public function __construct(array $options = [])
+    public function __construct(CoreSiteAccess $siteAccess, array $options = [])
     {
+        $this->siteAccess = $siteAccess;
         $this->options = $options;
     }
 
@@ -41,12 +45,11 @@ class SiteAccess implements EventSubscriberInterface
      */
     public function onBuildKernelWebHandler(PreBuildKernelWebHandlerEvent $event)
     {
-        $siteAccess = $this->container->get('ezpublish.siteaccess');
         $request = $event->getRequest();
         $uriPart = [];
 
         // Convert matching type
-        switch ($siteAccess->matchingType) {
+        switch ($this->siteAccess->matchingType) {
             case 'default':
                 $legacyAccessType = eZSiteAccess::TYPE_DEFAULT;
                 break;
@@ -96,8 +99,8 @@ class SiteAccess implements EventSubscriberInterface
         }
 
         // Handle host_uri match
-        if ($siteAccess->matcher instanceof CompoundInterface) {
-            $subMatchers = $siteAccess->matcher->getSubMatchers();
+        if ($this->siteAccess->matcher instanceof CompoundInterface) {
+            $subMatchers = $this->siteAccess->matcher->getSubMatchers();
             if (!$subMatchers) {
                 throw new \RuntimeException('Compound matcher used but not submatchers found.');
             }
@@ -111,7 +114,7 @@ class SiteAccess implements EventSubscriberInterface
         $event->getParameters()->set(
             'siteaccess',
             [
-                'name' => $siteAccess->name,
+                'name' => $this->siteAccess->name,
                 'type' => $legacyAccessType,
                 'uri_part' => $uriPart,
             ]

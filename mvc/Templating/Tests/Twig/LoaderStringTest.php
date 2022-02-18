@@ -8,20 +8,14 @@ namespace eZ\Publish\Core\MVC\Legacy\Templating\Tests\Twig;
 
 use eZ\Publish\Core\MVC\Legacy\Templating\Twig\LoaderString;
 use PHPUnit\Framework\TestCase;
-use Twig_Source;
+use Twig\Source;
 
 class LoaderStringTest extends TestCase
 {
-    public function testGetSource()
-    {
-        $loaderString = new LoaderString();
-        $this->assertSame('foo', $loaderString->getSource('foo'));
-    }
-
     public function testGetSourceContext()
     {
         $loaderString = new LoaderString();
-        $this->assertEquals(new Twig_Source('foo', 'foo'), $loaderString->getSourceContext('foo'));
+        $this->assertEquals(new Source('foo', 'foo'), $loaderString->getSourceContext('foo'));
     }
 
     public function testGetCacheKey()

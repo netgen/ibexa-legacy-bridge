@@ -88,10 +88,10 @@ class Security implements EventSubscriberInterface
             return;
         }
 
-        $currentUser = $this->repository->getCurrentUser();
+        $currentUserId = $this->repository->getPermissionResolver()->getCurrentUserReference()->getUserId();
         $event->getLegacyKernel()->runCallback(
-            static function () use ($currentUser) {
-                $legacyUser = eZUser::fetch($currentUser->id);
+            static function () use ($currentUserId) {
+                $legacyUser = eZUser::fetch($currentUserId);
                 eZUser::setCurrentlyLoggedInUser($legacyUser, $legacyUser->attribute('contentobject_id'), eZUser::NO_SESSION_REGENERATE);
             },
             false,

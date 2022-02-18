@@ -6,6 +6,7 @@
  */
 namespace eZ\Bundle\EzPublishLegacyBundle\EventListener;
 
+use eZ\Publish\Core\MVC\Legacy\Kernel\Loader;
 use eZ\Publish\Core\MVC\Legacy\LegacyEvents;
 use eZ\Publish\Core\MVC\Legacy\Event\PreResetLegacyKernelEvent;
 use eZINI;
@@ -30,9 +31,15 @@ class LegacyKernelListener implements EventSubscriberInterface
      */
     private $eventDispatcher;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    /**
+     * @var \eZ\Publish\Core\MVC\Legacy\Kernel\Loader
+     */
+    private $loader;
+
+    public function __construct(EventDispatcherInterface $eventDispatcher, Loader $loader)
     {
         $this->eventDispatcher = $eventDispatcher;
+        $this->loader = $loader;
     }
 
     public static function getSubscribedEvents()
@@ -69,9 +76,12 @@ class LegacyKernelListener implements EventSubscriberInterface
 
     private function resetKernelHandler()
     {
-        $legacyHandlerCLI = $this->container->get('ezpublish_legacy.kernel_handler.cli');
-        $this->container->set('ezpublish_legacy.kernel.lazy', null);
-        $this->container->set('ezpublish_legacy.kernel_handler', $legacyHandlerCLI);
-        $this->container->set('ezpublish_legacy.kernel_handler.web', $legacyHandlerCLI);
+        $legacyHandlerCLI = $this->container->get('ezpublish_legacy.kernel_handler.cli.internal');
+
+        ($this->loader->buildLegacyKernel($legacyHandlerCLI))($legacyHandlerCLI);
+
+        // $this->container->set('ezpublish_legacy.kernel', null);
+        // $this->container->set('ezpublish_legacy.kernel_handler', $legacyHandlerCLI);
+        // $this->container->set('ezpublish_legacy.kernel_handler.web', $legacyHandlerCLI);
     }
 }

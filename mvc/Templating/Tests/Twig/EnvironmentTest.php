@@ -10,7 +10,8 @@ use eZ\Publish\Core\MVC\Legacy\Templating\Twig\Environment;
 use eZ\Publish\Core\MVC\Legacy\Templating\LegacyEngine;
 use eZ\Publish\Core\MVC\Legacy\Templating\Twig\Template;
 use PHPUnit\Framework\TestCase;
-use Twig_LoaderInterface;
+use Twig\Error\LoaderError;
+use Twig\Loader\LoaderInterface;
 
 class EnvironmentTest extends TestCase
 {
@@ -33,7 +34,7 @@ class EnvironmentTest extends TestCase
             ->with($templateName)
             ->will($this->returnValue(true));
 
-        $twigEnv = new Environment($this->createMock(Twig_LoaderInterface::class));
+        $twigEnv = new Environment($this->createMock(LoaderInterface::class));
         $twigEnv->setEzLegacyEngine($legacyEngine);
         $template = $twigEnv->loadTemplate($templateName);
         $this->assertInstanceOf(Template::class, $template);
@@ -49,7 +50,7 @@ class EnvironmentTest extends TestCase
      */
     public function testLoadNonExistingTemplateLegacy()
     {
-        $this->expectException(\Twig_Error_Loader::class);
+        $this->expectException(LoaderError::class);
 
         $legacyEngine = $this->createMock(LegacyEngine::class);
 
@@ -64,7 +65,7 @@ class EnvironmentTest extends TestCase
             ->with($templateName)
             ->will($this->returnValue(false));
 
-        $twigEnv = new Environment($this->createMock(Twig_LoaderInterface::class));
+        $twigEnv = new Environment($this->createMock(LoaderInterface::class));
         $twigEnv->setEzLegacyEngine($legacyEngine);
         $twigEnv->loadTemplate($templateName);
     }

@@ -19,18 +19,15 @@ parameters:
 
     ezpublish_legacy.config.default_scope: site
 
-    # Environments to pre-generate config file for
-    ezpublish_legacy.setup_wizard.configuration_dumper.environments: [dev, prod]
-
     # Non-supported packages will have url_alias_router to false
     ezpublish_legacy.setup_wizard.supported_packages: [ezdemo_site, ezdemo_site_clean]
 
 services:
     ezpublish_legacy.kernel:
-        alias: ezpublish_legacy.kernel.lazy
+        alias: ezpublish_legacy.kernel.internal
         public: true
 
-    ezpublish_legacy.kernel.lazy:
+    ezpublish_legacy.kernel.internal:
         class: Closure
         public: true
         factory: ["@ezpublish_legacy.kernel.lazy_loader", buildLegacyKernel]
@@ -44,6 +41,7 @@ services:
             - "%webroot_dir%"
             - "@event_dispatcher"
             - "@ezpublish_legacy.uri_helper"
+            - "@ezpublish.siteaccess"
             - "@?logger"
         calls:
             - [setContainer, ["@service_container"]]
@@ -56,6 +54,10 @@ services:
         arguments: [ezpKernelRest]
 
     ezpublish_legacy.kernel_handler.web:
+        alias: ezpublish_legacy.kernel_handler.web.internal
+        public: true
+
+    ezpublish_legacy.kernel_handler.web.internal:
         class: ezpKernelHandler
         public: true
         factory: ["@ezpublish_legacy.kernel.lazy_loader", buildLegacyKernelHandlerWeb]
@@ -67,6 +69,10 @@ services:
         factory: ["@ezpublish_legacy.kernel.lazy_loader", buildLegacyKernelHandlerTreeMenu]
 
     ezpublish_legacy.kernel_handler.cli:
+        alias: ezpublish_legacy.kernel_handler.cli.internal
+        public: true
+
+    ezpublish_legacy.kernel_handler.cli.internal:
         class: eZ\Publish\Core\MVC\Legacy\Kernel\CLIHandler
         public: true
         factory: ["@ezpublish_legacy.kernel.lazy_loader", buildLegacyKernelHandlerCLI]
@@ -107,19 +113,6 @@ services:
             - "@ezpublish_legacy.rest.kernel_handler"
             - "@ezpublish_legacy.kernel.lazy_loader"
         parent: ezpublish.controller.base
-
-    ezpublish_legacy.setup.controller:
-        class: eZ\Bundle\EzPublishLegacyBundle\Controller\LegacySetupController
-        public: true
-        arguments:
-            - "@ezpublish_legacy.kernel"
-            - "@ezpublish_legacy.config.resolver"
-            - "@ezpublish_legacy.persistence_cache_purger"
-            - "@ezpublish_legacy.kernel.lazy_loader"
-            - "@ezpublish_legacy.setup_wizard.configuration_dumper"
-            - "@ezpublish_legacy.setup_wizard.configuration_converter"
-            - "@request_stack"
-            - "@kernel"
 
     ezpublish_legacy.preview.controller:
         class: eZ\Bundle\EzPublishLegacyBundle\Controller\PreviewController
@@ -169,9 +162,8 @@ services:
         class: eZ\Bundle\EzPublishLegacyBundle\LegacyMapper\SiteAccess
         public: false
         arguments:
+            - "@ezpublish.siteaccess"
             - "%ezpublish_legacy.siteaccess_mapper.options%"
-        calls:
-            - [setContainer, ["@service_container"]]
         tags:
             - { name: kernel.event_subscriber }
 
@@ -198,11 +190,11 @@ services:
         class: eZ\Bundle\EzPublishLegacyBundle\LegacyMapper\Configuration
         public: false
         arguments:
-            - "@ezpublish.config.resolver.core"
+            - "@ezpublish.config.resolver"
             - "@ezpublish_legacy.switchable_http_cache_purger"
             - "@ezpublish_legacy.persistence_cache_purger"
             - "@ezpublish.urlalias_generator"
-            - "@ezpublish.api.storage_engine.legacy.dbhandler"
+            - "@ezpublish.persistence.connection"
             - "@ezpublish_legacy.image_alias.cleaner"
             - "%ezpublish_legacy.configuration_mapper.options%"
         calls:
@@ -214,7 +206,6 @@ services:
         class: eZ\Bundle\EzPublishLegacyBundle\LegacyMapper\LegacyBundles
         public: false
         arguments:
-            - "@ezpublish.config.resolver.core"
             - { extensions: "%ezpublish_legacy.legacy_bundles_extensions%" }
         tags:
             - { name: kernel.event_subscriber }
@@ -270,15 +261,6 @@ services:
         public: true
         arguments: ["@ezpublish_legacy.config.resolver", "@ezpublish_legacy.kernel", "%ezpublish_legacy.setup_wizard.supported_packages%"]
 
-    ezpublish_legacy.setup_wizard.configuration_dumper:
-        class: eZ\Bundle\EzPublishLegacyBundle\SetupWizard\ConfigurationDumper
-        public: true
-        arguments:
-            - "@filesystem"
-            - "%ezpublish_legacy.setup_wizard.configuration_dumper.environments%"
-            - "%kernel.project_dir%/%kernel.name%"
-            - "%kernel.cache_dir%"
-
     # Image alias generator using legacy
     ezpublish_legacy.fieldType.ezimage.variation_service:
         class: eZ\Publish\Core\MVC\Legacy\Image\AliasGenerator
@@ -315,7 +297,7 @@ services:
     ezpublish_legacy.legacy_kernel_listener:
         class: eZ\Bundle\EzPublishLegacyBundle\EventListener\LegacyKernelListener
         public: false
-        arguments: ["@event_dispatcher"]
+        arguments: ["@event_dispatcher", "@ezpublish_legacy.kernel.lazy_loader"]
         calls:
             - [setContainer, ["@service_container"]]
         tags:

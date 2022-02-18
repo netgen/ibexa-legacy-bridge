@@ -6,7 +6,7 @@
  */
 namespace eZ\Publish\Core\MVC\Legacy\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**

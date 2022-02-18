@@ -6,26 +6,44 @@
  */
 namespace eZ\Bundle\EzPublishLegacyBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use FilesystemIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
-class LegacyWrapperInstallCommand extends ContainerAwareCommand
+class LegacyWrapperInstallCommand extends Command
 {
+    /**
+     * @var \Symfony\Component\Filesystem\Filesystem
+     */
+    private $fileSystem;
+
+    /**
+     * @var string
+     */
+    private $legacyRootDir;
+
+    public function __construct(Filesystem $fileSystem, string $legacyRootDir)
+    {
+        parent::__construct();
+
+        $this->fileSystem = $fileSystem;
+        $this->legacyRootDir = $legacyRootDir;
+    }
+
     protected function configure()
     {
         $this
-            ->setName('ezpublish:legacy:assets_install')
             ->setDefinition(
                 [
-                    new InputArgument('target', InputArgument::OPTIONAL, 'The target directory', 'web'),
+                    new InputArgument('target', InputArgument::OPTIONAL, 'The target directory', 'public'),
                 ]
             )
             ->addOption('symlink', null, InputOption::VALUE_NONE, 'Symlinks the assets instead of copying it')
@@ -42,7 +60,7 @@ EOT
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $targetArg = rtrim($input->getArgument('target'), '/');
         if (!is_dir($targetArg)) {
@@ -52,8 +70,7 @@ EOT
         /**
          * @var \Symfony\Component\Filesystem\Filesystem
          */
-        $filesystem = $this->getContainer()->get('filesystem');
-        $legacyRootDir = rtrim($this->getContainer()->getParameter('ezpublish_legacy.root_dir'), '/');
+        $legacyRootDir = rtrim($this->legacyRootDir, '/');
 
         $output->writeln(sprintf("Installing eZ Publish legacy assets from $legacyRootDir using the <comment>%s</comment> option", $input->getOption('symlink') ? 'symlink' : 'hard copy'));
         $symlink = $input->getOption('symlink');
@@ -80,13 +97,13 @@ EOT
                 continue;
             }
 
-            $filesystem->remove($targetDir);
+            $this->fileSystem->remove($targetDir);
             if ($symlink) {
                 if ($relative) {
-                    $relativeOriginDir = $filesystem->makePathRelative($originDir, realpath($targetArg));
+                    $relativeOriginDir = $this->fileSystem->makePathRelative($originDir, realpath($targetArg));
 
                     try {
-                        $filesystem->symlink($relativeOriginDir, $targetDir);
+                        $this->fileSystem->symlink($relativeOriginDir, $targetDir);
                     } catch (IOException $e) {
                         $relative = false;
                         $output->writeln('It looks like your system doesn\'t support relative symbolic links, so will fallback to absolute symbolic links instead!');
@@ -95,7 +112,7 @@ EOT
 
                 if (!$relative) {
                     try {
-                        $filesystem->symlink($originDir, $targetDir);
+                        $this->fileSystem->symlink($originDir, $targetDir);
                     } catch (IOException $e) {
                         $symlink = false;
                         $output->writeln('It looks like your system doesn\'t support symbolic links, so will fallback to hard copy instead!');
@@ -104,17 +121,17 @@ EOT
             }
 
             if (!$symlink) {
-                $filesystem->mkdir($targetDir, 0777);
+                $this->fileSystem->mkdir($targetDir, 0777);
                 // We use a custom iterator to ignore VCS files
                 $currentDir = getcwd();
                 chdir(realpath($targetArg));
-                $filesystem->mirror($originDir, $folder, Finder::create()->in($originDir));
+                $this->fileSystem->mirror($originDir, $folder, Finder::create()->in($originDir));
                 chdir($currentDir);
             }
         }
 
         if ($relative) {
-            $legacyRootDir = $filesystem->makePathRelative(realpath($legacyRootDir), realpath($targetArg));
+            $legacyRootDir = $this->fileSystem->makePathRelative(realpath($legacyRootDir), realpath($targetArg));
             $rootDirCode = "__DIR__ . DIRECTORY_SEPARATOR . '{$legacyRootDir}'";
         } else {
             $rootDirCode = "'{$legacyRootDir}'";
@@ -123,7 +140,7 @@ EOT
         $output->writeln("Installing wrappers for eZ Publish legacy front controllers (rest & cluster) with path $legacyRootDir");
         foreach (['index_rest.php', 'index_cluster.php'] as $frontController) {
             $newFrontController = "$targetArg/$frontController";
-            $filesystem->remove($newFrontController);
+            $this->fileSystem->remove($newFrontController);
 
             $code = <<<EOT
 <?php
@@ -139,8 +156,10 @@ EOT
  require '{$frontController}';
 
 EOT;
-            $filesystem->dumpFile($newFrontController, $code);
+            $this->fileSystem->dumpFile($newFrontController, $code);
         }
+
+        return 0;
     }
 
     private function isDirectoryEmpty($path)

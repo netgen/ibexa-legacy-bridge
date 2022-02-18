@@ -25,7 +25,7 @@ class LegacyTemplatesCollector extends DataCollector
         $this->legacyKernel = $legacyKernel;
     }
 
-    public function collect(Request $request, Response $response, \Exception $exception = null)
+    public function collect(Request $request, Response $response, \Throwable $exception = null)
     {
         $this->data = ['legacyTemplates' => TemplateDebugInfo::getLegacyTemplatesList($this->legacyKernel)];
     }

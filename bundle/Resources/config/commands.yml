@@ -1,0 +1,25 @@
+services:
+    ezpublish_legacy.command.legacy_src_symlink:
+        class: eZ\Bundle\EzPublishLegacyBundle\Command\LegacySrcSymlinkCommand
+        arguments:
+            ["@filesystem", "%ezpublish_legacy.root_dir%"]
+        tags:
+            - { name: console.command, command: ezpublish:legacy:symlink }
+
+    ezpublish_legacy.command.legacy_bundle_install:
+        class: eZ\Bundle\EzPublishLegacyBundle\Command\LegacyBundleInstallCommand
+        arguments: ["@ezpublish_legacy.legacy_bundles.extension_locator", "@kernel", "@filesystem", "%ezpublish_legacy.root_dir%"]
+        tags:
+            - { name: console.command, command: ezpublish:legacybundles:install_extensions }
+
+    ezpublish_legacy.command.legacy_wrapper_install:
+        class: eZ\Bundle\EzPublishLegacyBundle\Command\LegacyWrapperInstallCommand
+        arguments: ["@filesystem", "%ezpublish_legacy.root_dir%"]
+        tags:
+            - { name: console.command, command: ezpublish:legacy:assets_install }
+
+    ezpublish_legacy.command.legacy_embed_script:
+        class: eZ\Bundle\EzPublishLegacyBundle\Command\LegacyEmbedScriptCommand
+        arguments: ["@ezpublish_legacy.kernel", "@ezpublish_legacy.kernel_handler.cli"]
+        tags:
+            - { name: console.command, command: ezpublish:legacy:script }

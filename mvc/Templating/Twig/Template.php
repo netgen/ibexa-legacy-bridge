@@ -6,14 +6,15 @@
  */
 namespace eZ\Publish\Core\MVC\Legacy\Templating\Twig;
 
-use Twig_Environment;
-use Twig_Template;
+use Twig\Environment;
+use Twig\Source;
+use Twig\Template as BaseTemplate;
 use eZ\Publish\Core\MVC\Legacy\Templating\LegacyEngine;
 
 /**
  * Twig Template class representation for a legacy template.
  */
-class Template extends Twig_Template
+class Template extends BaseTemplate
 {
     private $templateName;
 
@@ -22,7 +23,7 @@ class Template extends Twig_Template
      */
     private $legacyEngine;
 
-    public function __construct($templateName, Twig_Environment $env, LegacyEngine $legacyEngine)
+    public function __construct($templateName, Environment $env, LegacyEngine $legacyEngine)
     {
         parent::__construct($env);
 
@@ -69,12 +70,9 @@ class Template extends Twig_Template
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSource()
+    public function getSourceContext()
     {
-        return '';
+        return new Source('', '');
     }
 
     /**

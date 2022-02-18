@@ -5,11 +5,6 @@ _ezpublishLegacyTreeMenu:
         _controller: ezpublish_legacy.treemenu.controller:viewMenu
         _format: json
 
-ezpublishSetup:
-    path: /ezsetup
-    defaults:
-        _controller: ezpublish_legacy.setup.controller:init
-
 _ezpublishLegacyLogin:
     path: /user/login
     defaults:

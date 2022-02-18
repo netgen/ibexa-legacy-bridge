@@ -6,7 +6,7 @@
  */
 namespace eZ\Bundle\EzPublishLegacyBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,12 +15,29 @@ use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
-class LegacySrcSymlinkCommand extends ContainerAwareCommand
+class LegacySrcSymlinkCommand extends Command
 {
+    /**
+     * @var \Symfony\Component\Filesystem\Filesystem
+     */
+    private $fileSystem;
+
+    /**
+     * @var string
+     */
+    private $legacyRootDir;
+
+    public function __construct(Filesystem $fileSystem, string $legacyRootDir)
+    {
+        parent::__construct();
+
+        $this->fileSystem = $fileSystem;
+        $this->legacyRootDir = $legacyRootDir;
+    }
+
     protected function configure()
     {
         $this
-            ->setName('ezpublish:legacy:symlink')
             ->setDefinition(
                 [
                     new InputArgument('src', InputArgument::OPTIONAL, 'The src directory for legacy files', 'src/legacy_files'),
@@ -45,18 +62,13 @@ EOT
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $srcArg = rtrim($input->getArgument('src'), '/');
         $create = (bool)$input->getOption('create');
         $force = (bool)$input->getOption('force');
 
-        /**
-         * @var \Symfony\Component\Filesystem\Filesystem
-         */
-        $filesystem = $this->getContainer()->get('filesystem');
-
-        if (!$filesystem->exists($srcArg)) {
+        if (!$this->fileSystem->exists($srcArg)) {
             if (!$create) {
                 $output->writeln(<<<EOT
 Aborting: The src directory "$srcArg" does not exist.
@@ -73,10 +85,10 @@ EOT
 , OutputInterface::VERBOSITY_QUIET
 );
 
-                return;
+                return 1;
             }
 
-            $filesystem->mkdir([
+            $this->fileSystem->mkdir([
                 $srcArg,
                 "$srcArg/design",
                 "$srcArg/settings",
@@ -87,7 +99,7 @@ EOT
             $output->writeln("<comment>Empty legacy src folder was created in '$srcArg'.</comment>");
         }
 
-        $symlinkFolderStr = implode(' ,', $this->linkSrcFolders($filesystem, $srcArg, $force, $output));
+        $symlinkFolderStr = implode(' ,', $this->linkSrcFolders($srcArg, $force, $output));
 
         if ($symlinkFolderStr) {
             $output->writeln("The following folders were symlinked: '$symlinkFolderStr'.");
@@ -102,33 +114,35 @@ re-run <info>ezpublish:legacy:symlink</info> to setup symlinks to eZ Publish leg
 
 EOT
 );
+
+        return 0;
     }
 
     /**
      * Setup symlinks for legacy settings/design files within eZ Publish legacy folder.
      *
-     * @param Filesystem $filesystem
+     * @param Filesystem $this->fileSystem
      * @param string $srcArg
      * @param bool $force
      * @param OutputInterface $output
      *
      * @return array
      */
-    protected function linkSrcFolders(Filesystem $filesystem, $srcArg, $force, OutputInterface $output)
+    protected function linkSrcFolders($srcArg, $force, OutputInterface $output)
     {
         $symlinks = [];
-        $legacyRootDir = rtrim($this->getContainer()->getParameter('ezpublish_legacy.root_dir'), '/');
+        $legacyRootDir = rtrim($this->legacyRootDir, '/');
         $relative = true;
 
         // first handle override folder if it exists
         if (
-            $filesystem->exists("$srcArg/settings/override") &&
-            ($force || !$filesystem->exists("$legacyRootDir/settings/override"))
+            $this->fileSystem->exists("$srcArg/settings/override") &&
+            ($force || !$this->fileSystem->exists("$legacyRootDir/settings/override"))
         ) {
             if ($relative) {
                 try {
-                    $filesystem->symlink(
-                        $filesystem->makePathRelative(
+                    $this->fileSystem->symlink(
+                        $this->fileSystem->makePathRelative(
                             realpath("$srcArg/settings/override"),
                             realpath("$legacyRootDir/settings")
                         ),
@@ -141,7 +155,7 @@ EOT
             }
 
             if (!$relative) {
-                $filesystem->symlink(
+                $this->fileSystem->symlink(
                     realpath("$srcArg/settings/override"),
                     "$legacyRootDir/settings/override"
                 );
@@ -155,14 +169,14 @@ EOT
         foreach ($directories as $directory) {
             foreach (Finder::create()->directories()->depth(0)->in(["$srcArg/$directory"]) as $folder) {
                 $folderName = $folder->getFilename();
-                if (!$force && $filesystem->exists("$legacyRootDir/$directory/$folderName")) {
+                if (!$force && $this->fileSystem->exists("$legacyRootDir/$directory/$folderName")) {
                     continue;
                 }
 
                 if ($relative) {
                     try {
-                        $filesystem->symlink(
-                            $filesystem->makePathRelative(
+                        $this->fileSystem->symlink(
+                            $this->fileSystem->makePathRelative(
                                 realpath("$srcArg/$directory/$folderName"),
                                 realpath("$legacyRootDir/$directory")
                             ),
@@ -175,7 +189,7 @@ EOT
                 }
 
                 if (!$relative) {
-                    $filesystem->symlink(
+                    $this->fileSystem->symlink(
                         realpath("$srcArg/$directory/$folderName"),
                         "$legacyRootDir/$directory/$folderName"
                     );

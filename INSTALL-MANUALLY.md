@@ -43,7 +43,7 @@ Example: In the case of stock eZ Platform 2.5LTS to make sure legacy scripts are
         "eZ\\Bundle\\EzPublishCoreBundle\\Composer\\ScriptHandler::clearCache",
         "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
         "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-        "@php bin/console bazinga:js-translation:dump 'web/assets' --merge-domains",
+        "@php bin/console bazinga:js-translation:dump 'public/assets' --merge-domains",
         "@legacy-scripts"
         "@php bin/console assetic:dump",
         "@php bin/security-checker security:check",
