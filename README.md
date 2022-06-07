@@ -1,8 +1,8 @@
 # eZ Platform Legacy Bridge
 
 [![Build Status](https://img.shields.io/travis/ezsystems/LegacyBridge.svg?style=flat-square)](https://travis-ci.org/ezsystems/LegacyBridge)
-[![Downloads](https://img.shields.io/packagist/dt/netgen/ezpublish-legacy-bridge.svg?style=flat-square)](https://packagist.org/packages/netgen/ezpublish-legacy-bridge)
-[![Latest version](https://img.shields.io/packagist/v/netgen/ezpublish-legacy-bridge.svg?style=flat-square)](https://packagist.org/packages/netgen/ezpublish-legacy-bridge)
+[![Downloads](https://img.shields.io/packagist/dt/netgen/ibexa-legacy-bridge.svg?style=flat-square)](https://packagist.org/packages/netgen/ibexa-legacy-bridge)
+[![Latest version](https://img.shields.io/packagist/v/netgen/ibexa-legacy-bridge.svg?style=flat-square)](https://packagist.org/packages/netgen/ibexa-legacy-bridge)
 [![License](https://img.shields.io/github/license/ezsystems/LegacyBridge.svg?style=flat-square)](LICENSE)
 
 This package integrates eZ Publish Legacy into eZ Platform. It is an enhanced version of LegacyBundle that were part of

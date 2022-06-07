@@ -6,11 +6,11 @@ install](https://doc.ezplatform.com/en/2.5/getting_started/install_ez_platform/)
 _TIP:_
 > Before starting make sure to check-in (e.g. to Git) your eZ Platform 2.5LTS project working space so you'll be able to see & verify changes applied to your setup separate from initial clean project install.
 
-### Install `netgen/ezpublish-legacy-bridge` and run `init` command
+### Install `netgen/ibexa-legacy-bridge` and run `init` command
 
 1. Installed package using [Composer](https://getcomposer.org/doc/00-intro.md):
 ```
-composer require --update-with-all-dependencies "netgen/ezpublish-legacy-bridge"
+composer require --update-with-all-dependencies "netgen/ibexa-legacy-bridge"
 ```
 
 2. Enable `EzPublishLegacyBundle`
