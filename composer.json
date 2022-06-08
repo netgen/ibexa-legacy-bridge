@@ -15,11 +15,11 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "ezsystems/ezpublish-legacy-installer": "^2.1",
-        "netgen/ezpublish-legacy": "dev-ibexa3",
-        "ezsystems/ezplatform-kernel": "^1.3.13",
-        "ezsystems/ezplatform-xmltext-fieldtype": "^2.0.2",
-        "netgen/richtext-datatype-bundle": "^1.1.1",
+        "netgen/ezpublish-legacy-installer": "^2.2",
+        "netgen/ezpublish-legacy": "dev-ibexa4",
+        "ibexa/core": "^4.1",
+        "netgen/ibexa-xmltext-fieldtype": "^3.0",
+        "netgen/richtext-datatype-bundle": "^2.0",
         "twig/twig": "^2.12 || ^3.0"
     },
     "require-dev": {
@@ -43,7 +43,7 @@
     "extra": {
         "ezpublish-legacy-dir": "ezpublish_legacy",
         "branch-alias": {
-            "dev-master": "3.0.x-dev"
+            "dev-master": "4.0.x-dev"
         }
     }
 }
