@@ -6,7 +6,7 @@
  */
 namespace eZ\Publish\Core\MVC\Legacy\SignalSlot;
 
-use eZ\Publish\Core\SignalSlot\Signal;
+use Ibexa\Core\SignalSlot\Signal;
 use eZCache;
 
 /**
@@ -19,7 +19,7 @@ abstract class AbstractLegacyObjectStateSlot extends AbstractLegacySlot
      *
      * Concrete implementation of this class should take care of checking the type of the signal.
      *
-     * @param \eZ\Publish\Core\SignalSlot\Signal $signal
+     * @param \Ibexa\Core\SignalSlot\Signal $signal
      */
     public function receive(Signal $signal)
     {

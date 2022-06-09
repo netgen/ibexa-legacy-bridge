@@ -7,7 +7,7 @@
 namespace eZ\Bundle\EzPublishLegacyBundle\SetupWizard;
 
 use eZ\Bundle\EzPublishLegacyBundle\DependencyInjection\Configuration\LegacyConfigResolver;
-use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
+use Ibexa\Core\Base\Exceptions\InvalidArgumentException;
 use eZINI;
 use eZSiteAccess;
 
@@ -45,18 +45,18 @@ class ConfigurationConverter
      * @param string $sitePackage Name of the chosen install package
      * @param string $adminSiteaccess Name of the admin siteaccess
      *
-     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentException
+     * @throws \Ibexa\Core\Base\Exceptions\InvalidArgumentException
      *
      * @return array
      */
     public function fromLegacy($sitePackage, $adminSiteaccess)
     {
         $settings = [
-            'ezpublish' => ['siteaccess' => []],
+            'ibexa' => ['siteaccess' => []],
             'ez_publish_legacy' => ['enabled' => true],
         ];
         $defaultSiteaccess = $this->getParameter('SiteSettings', 'DefaultAccess');
-        $settings['ezpublish']['siteaccess']['default_siteaccess'] = $defaultSiteaccess;
+        $settings['ibexa']['siteaccess']['default_siteaccess'] = $defaultSiteaccess;
         $siteList = $this->getParameter('SiteAccessSettings', 'AvailableSiteAccessList');
 
         if (!\is_array($siteList) || empty($siteList)) {
@@ -67,16 +67,16 @@ class ConfigurationConverter
             throw new InvalidArgumentException('adminSiteaccess', "Siteaccess $adminSiteaccess wasn't found in SiteAccessSettings.AvailableSiteAccessList");
         }
 
-        $settings['ezpublish']['siteaccess']['list'] = $siteList;
-        $settings['ezpublish']['siteaccess']['groups'] = [];
+        $settings['ibexa']['siteaccess']['list'] = $siteList;
+        $settings['ibexa']['siteaccess']['groups'] = [];
         $groupName = $sitePackage . '_group';
-        $settings['ezpublish']['siteaccess']['groups'][$groupName] = $siteList;
-        $settings['ezpublish']['siteaccess']['match'] = $this->resolveMatching();
-        $settings['ezpublish']['system'] = [];
-        $settings['ezpublish']['system'][$groupName] = [];
+        $settings['ibexa']['siteaccess']['groups'][$groupName] = $siteList;
+        $settings['ibexa']['siteaccess']['match'] = $this->resolveMatching();
+        $settings['ibexa']['system'] = [];
+        $settings['ibexa']['system'][$groupName] = [];
 
-        $settings['ezpublish']['system'][$defaultSiteaccess] = [];
-        $settings['ezpublish']['system'][$adminSiteaccess] = [];
+        $settings['ibexa']['system'][$defaultSiteaccess] = [];
+        $settings['ibexa']['system'][$adminSiteaccess] = [];
 
         // Database settings
         $databaseSettings = $this->getGroup('DatabaseSettings', 'site.ini', $defaultSiteaccess);
@@ -88,10 +88,10 @@ class ConfigurationConverter
                 ],
             ],
         ];
-        $settings['ezpublish']['repositories'] = [
+        $settings['ibexa']['repositories'] = [
             $repositoryName => ['engine' => 'legacy', 'connection' => "{$repositoryName}_connection"],
         ];
-        $settings['ezpublish']['system'][$groupName]['repository'] = $repositoryName;
+        $settings['ibexa']['system'][$groupName]['repository'] = $repositoryName;
 
         // If package is not supported, all siteaccesses will have individually legacy_mode to true, forcing legacy fallback
         if (!isset($this->supportedPackages[$sitePackage])) {
@@ -107,28 +107,28 @@ class ConfigurationConverter
 
         $languages = $this->getLanguages($siteList, $groupName);
         foreach ($languages as $siteaccess => $langSettings) {
-            $settings['ezpublish']['system'][$siteaccess]['languages'] = $langSettings;
+            $settings['ibexa']['system'][$siteaccess]['languages'] = $langSettings;
         }
 
         // FileSettings
-        $settings['ezpublish']['system'][$groupName]['var_dir'] =
+        $settings['ibexa']['system'][$groupName]['var_dir'] =
             $this->getParameter('FileSettings', 'VarDir', 'site.ini', $defaultSiteaccess);
 
         // we don't map the default FileSettings.StorageDir value
         $storageDir = $this->getParameter('FileSettings', 'StorageDir', 'site.ini', $defaultSiteaccess);
         if ($storageDir !== 'storage') {
-            $settings['ezpublish']['system'][$groupName]['storage_dir'] = $storageDir;
+            $settings['ibexa']['system'][$groupName]['storage_dir'] = $storageDir;
         }
 
         // ImageMagick settings
         $imageMagickEnabled = $this->getParameter('ImageMagick', 'IsEnabled', 'image.ini', $defaultSiteaccess);
         if ($imageMagickEnabled == 'true') {
-            $settings['ezpublish']['imagemagick']['enabled'] = true;
+            $settings['ibexa']['imagemagick']['enabled'] = true;
             $imageMagickExecutablePath = $this->getParameter('ImageMagick', 'ExecutablePath', 'image.ini', $defaultSiteaccess);
             $imageMagickExecutable = $this->getParameter('ImageMagick', 'Executable', 'image.ini', $defaultSiteaccess);
-            $settings['ezpublish']['imagemagick']['path'] = rtrim($imageMagickExecutablePath, '/\\') . '/' . $imageMagickExecutable;
+            $settings['ibexa']['imagemagick']['path'] = rtrim($imageMagickExecutablePath, '/\\') . '/' . $imageMagickExecutable;
         } else {
-            $settings['ezpublish']['imagemagick']['enabled'] = false;
+            $settings['ibexa']['imagemagick']['enabled'] = false;
         }
 
         // Dump image variations for unsupported packages only (i.e. not ezdemo)
@@ -136,7 +136,7 @@ class ConfigurationConverter
         if (!isset($this->supportedPackages[$sitePackage])) {
             $variations = $this->getImageVariations($siteList, $groupName);
             foreach ($variations as $siteaccess => $imgSettings) {
-                $settings['ezpublish']['system'][$siteaccess]['image_variations'] = $imgSettings;
+                $settings['ibexa']['system'][$siteaccess]['image_variations'] = $imgSettings;
             }
         }
 
@@ -145,12 +145,12 @@ class ConfigurationConverter
                 $this->getParameter('Session', 'SessionNameHandler', 'site.ini', $siteaccess) === 'custom' &&
                 $this->getParameter('Session', 'SessionNamePerSiteAccess', 'site.ini', $siteaccess) !== 'enabled'
             ) {
-                $settings['ezpublish']['system'][$siteaccess]['session'] = ['name' => $this->getParameter('Session', 'SessionNamePrefix', 'site.ini')];
+                $settings['ibexa']['system'][$siteaccess]['session'] = ['name' => $this->getParameter('Session', 'SessionNamePrefix', 'site.ini')];
             }
         }
 
         ksort($settings);
-        ksort($settings['ezpublish']);
+        ksort($settings['ibexa']);
 
         return $settings;
     }
@@ -429,7 +429,7 @@ class ConfigurationConverter
      *
      * @param mixed[] $siteaccessSettings
      *
-     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentException
+     * @throws \Ibexa\Core\Base\Exceptions\InvalidArgumentException
      *
      * @return array|bool
      */

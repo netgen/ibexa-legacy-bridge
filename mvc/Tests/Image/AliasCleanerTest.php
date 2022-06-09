@@ -6,11 +6,11 @@
  */
 namespace eZ\Publish\Core\MVC\Legacy\Tests\Image;
 
-use eZ\Publish\Core\IO\IOServiceInterface;
-use eZ\Publish\Core\IO\Values\BinaryFile;
+use Ibexa\Core\IO\IOServiceInterface;
+use Ibexa\Core\IO\Values\BinaryFile;
 use eZ\Publish\Core\MVC\Legacy\Image\AliasCleaner;
-use eZ\Publish\Core\FieldType\Image\AliasCleanerInterface;
-use eZ\Publish\Core\IO\UrlRedecoratorInterface;
+use Ibexa\Core\FieldType\Image\AliasCleanerInterface;
+use Ibexa\Core\IO\UrlRedecoratorInterface;
 use PHPUnit\Framework\TestCase;
 
 class AliasCleanerTest extends TestCase
@@ -21,17 +21,17 @@ class AliasCleanerTest extends TestCase
     private $aliasCleaner;
 
     /**
-     * @var \eZ\Publish\Core\FieldType\Image\AliasCleanerInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Ibexa\Core\FieldType\Image\AliasCleanerInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private $innerAliasCleaner;
 
     /**
-     * @var \eZ\Publish\Core\IO\UrlRedecoratorInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Ibexa\Core\IO\UrlRedecoratorInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private $urlRedecorator;
 
     /**
-     * @var \eZ\Publish\Core\IO\IOServiceInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Ibexa\Core\IO\IOServiceInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     private $IOService;
 

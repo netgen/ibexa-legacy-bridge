@@ -7,7 +7,7 @@
 namespace eZ\Bundle\EzPublishLegacyBundle\Routing;
 
 use eZModule;
-use eZ\Publish\Core\MVC\Symfony\Routing\Generator;
+use Ibexa\Core\MVC\Symfony\Routing\Generator;
 
 class UrlGenerator extends Generator
 {

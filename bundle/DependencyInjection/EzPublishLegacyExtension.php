@@ -7,8 +7,8 @@
 namespace eZ\Bundle\EzPublishLegacyBundle\DependencyInjection;
 
 use Assetic\Factory\Loader\FormulaLoaderInterface;
-use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\ConfigurationProcessor;
-use eZ\Bundle\EzPublishCoreBundle\DependencyInjection\Configuration\SiteAccessAware\ContextualizerInterface;
+use Ibexa\Bundle\Core\DependencyInjection\Configuration\SiteAccessAware\ConfigurationProcessor;
+use Ibexa\Bundle\Core\DependencyInjection\Configuration\SiteAccessAware\ContextualizerInterface;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
@@ -89,8 +89,8 @@ class EzPublishLegacyExtension extends Extension
 
                 if (isset($scopeSettings['legacy_mode'])) {
                     $container = $contextualizer->getContainer();
-                    $container->setParameter("ezsettings.$currentScope.legacy_mode", $scopeSettings['legacy_mode']);
-                    $container->setParameter("ezsettings.$currentScope.url_alias_router", !$scopeSettings['legacy_mode']);
+                    $container->setParameter("ibexa.site_access.config.$currentScope.legacy_mode", $scopeSettings['legacy_mode']);
+                    $container->setParameter("ibexa.site_access.config.$currentScope.url_alias_router", !$scopeSettings['legacy_mode']);
                 }
             }
         );

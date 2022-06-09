@@ -2,8 +2,8 @@ services:
     ezpublish_legacy.image_alias.cleaner:
         class: eZ\Publish\Core\MVC\Legacy\Image\AliasCleaner
         arguments:
-            - "@ezpublish.image_alias.imagine.alias_cleaner"
-            - "@ezpublish.core.io.image_fieldtype.legacy_url_redecorator"
-            - "@ezpublish.fieldType.ezimage.io_service"
+            - "@Ibexa\\Bundle\\Core\\Imagine\\AliasCleaner"
+            - "@Ibexa\\Core\\IO\\UrlRedecorator"
+            - "@Ibexa\\Core\\FieldType\\Image\\IO\\Legacy"
         lazy: true
         public: false

@@ -6,7 +6,7 @@
  */
 namespace eZ\Bundle\EzPublishLegacyBundle\Tests\FieldType\Page;
 
-use eZ\Publish\Core\FieldType\Tests\Page\PageServiceTest as BaseTest;
+use Ibexa\Core\FieldType\Tests\Page\PageServiceTest as BaseTest;
 use eZ\Bundle\EzPublishLegacyBundle\FieldType\Page\PageService;
 
 class PageServiceTest extends BaseTest

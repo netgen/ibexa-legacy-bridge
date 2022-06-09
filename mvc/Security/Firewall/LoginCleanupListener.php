@@ -19,7 +19,7 @@ use Symfony\Component\Security\Http\SecurityEvents;
  * In this case we need to properly remove the is_logged_in cookie and the user id stored in session.
  *
  * @see https://jira.ez.no/browse/EZP-21520
- * @see eZ\Publish\Core\MVC\Symfony\Security\Authentication\Provider::authenticate()
+ * @see Ibexa\Core\MVC\Symfony\Security\Authentication\Provider::authenticate()
  */
 class LoginCleanupListener implements EventSubscriberInterface
 {

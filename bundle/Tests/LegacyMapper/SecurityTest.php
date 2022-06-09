@@ -6,16 +6,16 @@
  */
 namespace eZ\Bundle\EzPublishLegacyBundle\Tests\LegacyMapper;
 
-use eZ\Publish\API\Repository\Values\Content\Content;
-use eZ\Publish\API\Repository\Values\Content\VersionInfo;
-use eZ\Publish\API\Repository\Values\Content\ContentInfo;
-use eZ\Publish\API\Repository\Repository;
+use Ibexa\Contracts\Core\Repository\Values\Content\Content;
+use Ibexa\Contracts\Core\Repository\Values\Content\VersionInfo;
+use Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo;
+use Ibexa\Contracts\Core\Repository\Repository;
 use eZ\Publish\Core\MVC\Legacy\Event\PostBuildKernelEvent;
 use eZ\Publish\Core\MVC\Legacy\Event\PreBuildKernelWebHandlerEvent;
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use eZ\Publish\Core\MVC\Legacy\LegacyEvents;
 use eZ\Publish\Core\MVC\Legacy\Kernel;
-use eZ\Publish\Core\Repository\Values\User\User;
+use Ibexa\Core\Repository\Values\User\User;
 use eZ\Bundle\EzPublishLegacyBundle\LegacyMapper\Security;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,12 +29,12 @@ use ezpWebBasedKernelHandler;
 class SecurityTest extends TestCase
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\API\Repository\Repository
+     * @var \PHPUnit_Framework_MockObject_MockObject|\Ibexa\Contracts\Core\Repository\Repository
      */
     private $repository;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\eZ\Publish\Core\MVC\ConfigResolverInterface
+     * @var \PHPUnit_Framework_MockObject_MockObject|\Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface
      */
     private $configResolver;
 
@@ -218,7 +218,7 @@ class SecurityTest extends TestCase
     /**
      * @param $userId
      *
-     * @return \eZ\Publish\Core\Repository\Values\User\User
+     * @return \Ibexa\Core\Repository\Values\User\User
      */
     private function generateUser($userId)
     {

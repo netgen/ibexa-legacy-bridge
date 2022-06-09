@@ -6,6 +6,7 @@
  */
 namespace eZ\Bundle\EzPublishLegacyBundle\DependencyInjection\Compiler;
 
+use Ibexa\Core\MVC\Symfony\Security\EventListener\SecurityListener as BaseSecurityListener;
 use eZ\Bundle\EzPublishLegacyBundle\Security\SecurityListener;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -14,11 +15,11 @@ class SecurityListenerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('ezpublish.security.login_listener')) {
+        if (!$container->hasDefinition(BaseSecurityListener::class)) {
             return;
         }
 
-        $container->findDefinition('ezpublish.security.login_listener')
+        $container->findDefinition(BaseSecurityListener::class)
             ->setClass(SecurityListener::class);
     }
 }

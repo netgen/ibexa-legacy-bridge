@@ -7,10 +7,10 @@
 namespace eZ\Bundle\EzPublishLegacyBundle\Tests\EventListener;
 
 use eZ\Bundle\EzPublishLegacyBundle\EventListener\ConfigScopeListener;
-use eZ\Publish\Core\MVC\Symfony\Event\ScopeChangeEvent;
-use eZ\Publish\Core\MVC\Symfony\MVCEvents;
+use Ibexa\Core\MVC\Symfony\Event\ScopeChangeEvent;
+use Ibexa\Core\MVC\Symfony\MVCEvents;
 use eZ\Publish\Core\MVC\Legacy\Kernel\Loader;
-use eZ\Publish\Core\MVC\Symfony\SiteAccess;
+use Ibexa\Core\MVC\Symfony\SiteAccess;
 use PHPUnit\Framework\TestCase;
 
 class ConfigScopeListenerTest extends TestCase

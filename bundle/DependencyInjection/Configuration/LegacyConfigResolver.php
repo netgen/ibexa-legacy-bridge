@@ -6,8 +6,8 @@
  */
 namespace eZ\Bundle\EzPublishLegacyBundle\DependencyInjection\Configuration;
 
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
-use eZ\Publish\Core\MVC\Exception\ParameterNotFoundException;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
+use Ibexa\Core\MVC\Exception\ParameterNotFoundException;
 use eZINI;
 
 /**
@@ -63,7 +63,7 @@ class LegacyConfigResolver implements ConfigResolverInterface
      * @param string $namespace The legacy INI file name, without the suffix (i.e. without ".ini").
      * @param string $scope A specific siteaccess to look into. Defaults to the current siteaccess.
      *
-     * @throws \eZ\Publish\Core\MVC\Exception\ParameterNotFoundException
+     * @throws \Ibexa\Core\MVC\Exception\ParameterNotFoundException
      *
      * @return mixed
      */
@@ -103,7 +103,7 @@ class LegacyConfigResolver implements ConfigResolverInterface
      * @param string $namespace The legacy INI file name, without the suffix (i.e. without ".ini").
      * @param string $scope A specific siteaccess to look into. Defaults to the current siteaccess.
      *
-     * @throws \eZ\Publish\Core\MVC\Exception\ParameterNotFoundException
+     * @throws \Ibexa\Core\MVC\Exception\ParameterNotFoundException
      *
      * @return array
      */

@@ -7,12 +7,12 @@
 namespace eZ\Bundle\EzPublishLegacyBundle\Tests\Cache;
 
 use eZ\Bundle\EzPublishLegacyBundle\Cache\SwitchableHttpCachePurger;
-use EzSystems\PlatformHttpCacheBundle\PurgeClient\PurgeClientInterface;
+use Ibexa\Contracts\HttpCache\PurgeClient\PurgeClientInterface;
 use PHPUnit\Framework\TestCase;
 
 class SwitchableHttpCachePurgerTest extends TestCase
 {
-    /** @var \EzSystems\PlatformHttpCacheBundle\PurgeClient\PurgeClientInterface|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \Ibexa\Contracts\HttpCache\PurgeClient\PurgeClientInterface|\PHPUnit_Framework_MockObject_MockObject */
     private $purgeClientMockMock;
 
     /** @var \eZ\Bundle\EzPublishLegacyBundle\Cache\SwitchableHttpCachePurger */

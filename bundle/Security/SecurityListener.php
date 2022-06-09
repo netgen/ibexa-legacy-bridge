@@ -6,7 +6,7 @@
  */
 namespace eZ\Bundle\EzPublishLegacyBundle\Security;
 
-use eZ\Publish\Core\MVC\Symfony\Security\EventListener\SecurityListener as BaseListener;
+use Ibexa\Core\MVC\Symfony\Security\EventListener\SecurityListener as BaseListener;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class SecurityListener extends BaseListener

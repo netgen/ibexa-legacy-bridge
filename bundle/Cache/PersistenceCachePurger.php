@@ -8,8 +8,8 @@ namespace eZ\Bundle\EzPublishLegacyBundle\Cache;
 
 use Symfony\Component\Cache\Adapter\TagAwareAdapterInterface;
 use Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface;
-use eZ\Publish\SPI\Persistence\Content\Location\Handler as LocationHandlerInterface;
-use eZ\Publish\Core\Base\Exceptions\InvalidArgumentType;
+use Ibexa\Contracts\Core\Persistence\Content\Location\Handler as LocationHandlerInterface;
+use Ibexa\Core\Base\Exceptions\InvalidArgumentType;
 use Ibexa\Core\Persistence\Cache\Identifier\CacheIdentifierGeneratorInterface;
 
 /**
@@ -39,7 +39,7 @@ class PersistenceCachePurger implements CacheClearerInterface
     protected $cache;
 
     /**
-     * @var \eZ\Publish\SPI\Persistence\Content\Location\Handler
+     * @var \Ibexa\Contracts\Core\Persistence\Content\Location\Handler
      */
     protected $locationHandler;
 
@@ -69,7 +69,7 @@ class PersistenceCachePurger implements CacheClearerInterface
      * Setups current handler with everything needed.
      *
      * @param \Symfony\Component\Cache\Adapter\TagAwareAdapterInterface $cache
-     * @param \eZ\Publish\SPI\Persistence\Content\Location\Handler $locationHandler (using SPI cache instance so calls are cached)
+     * @param \Ibexa\Contracts\Core\Persistence\Content\Location\Handler $locationHandler (using SPI cache instance so calls are cached)
      * @param \Ibexa\Core\Persistence\Cache\Identifier\CacheIdentifierGeneratorInterface $cacheIdentifierGenerator
      */
     public function __construct(
@@ -147,7 +147,7 @@ class PersistenceCachePurger implements CacheClearerInterface
      *
      * @return array|int|\int[]|null
      *
-     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType On invalid $id type
+     * @throws \Ibexa\Core\Base\Exceptions\InvalidArgumentType On invalid $id type
      */
     public function content($locationIds = null, array $contentIds = null)
     {
@@ -234,7 +234,7 @@ class PersistenceCachePurger implements CacheClearerInterface
      *
      * @param int|null $id Purges all contentType cache if null
      *
-     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType On invalid $id type
+     * @throws \Ibexa\Core\Base\Exceptions\InvalidArgumentType On invalid $id type
      */
     public function contentType($id = null)
     {
@@ -264,7 +264,7 @@ class PersistenceCachePurger implements CacheClearerInterface
      *
      * @param int $id
      *
-     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType On invalid $id type
+     * @throws \Ibexa\Core\Base\Exceptions\InvalidArgumentType On invalid $id type
      */
     public function contentTypeGroup($id)
     {
@@ -290,7 +290,7 @@ class PersistenceCachePurger implements CacheClearerInterface
      *
      * @param int $id
      *
-     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType On invalid $id type
+     * @throws \Ibexa\Core\Base\Exceptions\InvalidArgumentType On invalid $id type
      */
     public function section($id)
     {
@@ -354,7 +354,7 @@ class PersistenceCachePurger implements CacheClearerInterface
      *
      * @param int|null $id Purges all users cache if null
      *
-     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType On invalid $id type
+     * @throws \Ibexa\Core\Base\Exceptions\InvalidArgumentType On invalid $id type
      */
     public function user($id = null)
     {

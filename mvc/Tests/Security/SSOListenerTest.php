@@ -6,13 +6,13 @@
  */
 namespace eZ\Publish\Core\MVC\Legacy\Tests\Security;
 
-use eZ\Publish\API\Repository\UserService;
+use Ibexa\Contracts\Core\Repository\UserService;
 use eZ\Publish\Core\MVC\Legacy\Security\Firewall\SSOListener;
-use eZ\Publish\Core\MVC\Symfony\Security\User;
-use eZ\Publish\Core\Repository\Values\User\User as CoreUser;
-use eZ\Publish\Core\Repository\Values\Content\Content;
-use eZ\Publish\API\Repository\Values\Content\ContentInfo;
-use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
+use Ibexa\Core\MVC\Symfony\Security\User;
+use Ibexa\Core\Repository\Values\User\User as CoreUser;
+use Ibexa\Core\Repository\Values\Content\Content;
+use Ibexa\Contracts\Core\Repository\Values\Content\ContentInfo;
+use Ibexa\Core\Repository\Values\Content\VersionInfo;
 use PHPUnit\Framework\TestCase;
 use ReflectionObject;
 use Symfony\Component\HttpFoundation\Request;

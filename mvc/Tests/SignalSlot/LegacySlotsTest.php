@@ -6,7 +6,7 @@
  */
 namespace eZ\Publish\Core\MVC\Legacy\Tests\SignalSlot;
 
-use eZ\Publish\Core\SignalSlot;
+use Ibexa\Core\SignalSlot;
 use eZ\Publish\Core\MVC\Legacy\SignalSlot\AbstractLegacySlot;
 use eZ\Bundle\EzPublishLegacyBundle\Cache\Switchable;
 use PHPUnit\Framework\TestCase;
@@ -17,7 +17,7 @@ use ezpKernelHandler;
  */
 class LegacySlotsTest extends TestCase
 {
-    const SIGNAL_SLOT_NS = 'eZ\Publish\Core\SignalSlot';
+    const SIGNAL_SLOT_NS = 'Ibexa\Core\SignalSlot';
     const LEGACY_SIGNAL_SLOT_NS = 'eZ\Publish\Core\MVC\Legacy\SignalSlot';
 
     /**
@@ -42,7 +42,7 @@ class LegacySlotsTest extends TestCase
     }
 
     /**
-     * @covers \eZ\Publish\Core\SignalSlot\Slot\AbstractLegacySlot::getLegacyKernel
+     * @covers \Ibexa\Core\SignalSlot\Slot\AbstractLegacySlot::getLegacyKernel
      */
     public function testAbstractLegacySlot()
     {
@@ -93,7 +93,7 @@ class LegacySlotsTest extends TestCase
         $slotClassName = self::LEGACY_SIGNAL_SLOT_NS . '\\' . $slotName;
 
         /**
-         * @var \eZ\Publish\Core\SignalSlot\Slot
+         * @var \Ibexa\Core\SignalSlot\Slot
          */
         $slot = new $slotClassName(
             static function () use ($ezpKernelHandlerMock) {
@@ -109,7 +109,7 @@ class LegacySlotsTest extends TestCase
             ->will($this->returnValue(null));
 
         /**
-         * @var \eZ\Publish\Core\SignalSlot\Signal
+         * @var \Ibexa\Core\SignalSlot\Signal
          */
         $signal = new $signalClassName($signalProperties);
         $slot->receive($signal);
@@ -124,7 +124,7 @@ class LegacySlotsTest extends TestCase
         $slotClassName = self::LEGACY_SIGNAL_SLOT_NS . '\\' . $slotName;
 
         /**
-         * @var \eZ\Publish\Core\SignalSlot\Slot
+         * @var \Ibexa\Core\SignalSlot\Slot
          */
         $slot = new $slotClassName(
             static function () use ($ezpKernelHandlerMock) {
@@ -140,7 +140,7 @@ class LegacySlotsTest extends TestCase
             ->will($this->returnValue(null));
 
         /**
-         * @var \eZ\Publish\Core\SignalSlot\Signal
+         * @var \Ibexa\Core\SignalSlot\Signal
          */
         $signal = $this->createMock(self::SIGNAL_SLOT_NS . '\\Signal');
         $slot->receive($signal);

@@ -6,8 +6,8 @@
  */
 namespace eZ\Bundle\EzPublishLegacyBundle\Security;
 
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\Security\Http\Firewall\RememberMeListener as BaseRememberMeListener;
 
 class RememberMeListener extends BaseRememberMeListener
@@ -25,7 +25,7 @@ class RememberMeListener extends BaseRememberMeListener
         $this->configResolver = $configResolver;
     }
 
-    public function handle(GetResponseEvent $event)
+    public function handle(ResponseEvent $event)
     {
         // In legacy_mode, "remember me" must be delegated to legacy kernel.
         if ($this->configResolver->getParameter('legacy_mode')) {

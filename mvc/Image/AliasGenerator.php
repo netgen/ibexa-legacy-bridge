@@ -6,11 +6,11 @@
  */
 namespace eZ\Publish\Core\MVC\Legacy\Image;
 
-use eZ\Publish\SPI\Variation\VariationHandler;
-use eZ\Publish\API\Repository\Values\Content\Field;
-use eZ\Publish\API\Repository\Values\Content\VersionInfo;
-use eZ\Publish\SPI\Variation\Values\ImageVariation;
-use eZ\Publish\API\Repository\Exceptions\InvalidVariationException;
+use Ibexa\Contracts\Core\Variation\VariationHandler;
+use Ibexa\Contracts\Core\Repository\Values\Content\Field;
+use Ibexa\Contracts\Core\Repository\Values\Content\VersionInfo;
+use Ibexa\Contracts\Core\Variation\Values\ImageVariation;
+use Ibexa\Contracts\Core\Repository\Exceptions\InvalidVariationException;
 use eZContentObjectAttribute;
 use eZImageAliasHandler;
 use Closure;
@@ -31,7 +31,7 @@ class AliasGenerator implements VariationHandler
      * Image variation objects, indexed by <fieldId>-<versionNo>-<variationName>.
      * Storing them avoids to run the legacy kernel each time if there are similar images variations required.
      *
-     * @var \eZ\Publish\SPI\Variation\Values\ImageVariation[]
+     * @var \Ibexa\Contracts\Core\Variation\Values\ImageVariation[]
      */
     private $variations;
 
@@ -54,14 +54,14 @@ class AliasGenerator implements VariationHandler
      * Returns an image variation object.
      * Variation creation will be done through the legacy eZImageAliasHandler, using the legacy kernel.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\Field $field
-     * @param \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
+     * @param \Ibexa\Contracts\Core\Repository\Values\Content\Field $field
+     * @param \Ibexa\Contracts\Core\Repository\Values\Content\VersionInfo $versionInfo
      * @param string $variationName
      * @param array $parameters
      *
-     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidVariationException
+     * @throws \Ibexa\Contracts\Core\Repository\Exceptions\InvalidVariationException
      *
-     * @return \eZ\Publish\SPI\Variation\Values\ImageVariation
+     * @return \Ibexa\Contracts\Core\Variation\Values\ImageVariation
      */
     public function getVariation(Field $field, VersionInfo $versionInfo, $variationName, array $parameters = [])
     {

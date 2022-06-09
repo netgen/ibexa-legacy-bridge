@@ -6,15 +6,15 @@
  */
 namespace eZ\Publish\Core\MVC\Legacy\View\Provider;
 
-use eZ\Publish\API\Repository\Values\Content\Content as APIContent;
+use Ibexa\Contracts\Core\Repository\Values\Content\Content as APIContent;
 use eZ\Publish\Core\MVC\Legacy\Templating\LegacyHelper;
 use eZ\Publish\Core\MVC\Legacy\View\Provider;
-use eZ\Publish\Core\MVC\Symfony\RequestStackAware;
-use eZ\Publish\Core\MVC\Symfony\View\LocationValueView;
-use eZ\Publish\Core\MVC\Symfony\View\View;
-use eZ\Publish\Core\MVC\Symfony\View\ViewProvider;
-use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
-use eZ\Publish\Core\MVC\Symfony\View\ContentView;
+use Ibexa\Core\MVC\Symfony\RequestStackAware;
+use Ibexa\Core\MVC\Symfony\View\LocationValueView;
+use Ibexa\Core\MVC\Symfony\View\View;
+use Ibexa\Core\MVC\Symfony\View\ViewProvider;
+use Ibexa\Contracts\Core\Repository\Values\Content\Location as APILocation;
+use Ibexa\Core\MVC\Symfony\View\ContentView;
 use eZModule;
 use ezpEvent;
 
@@ -26,9 +26,9 @@ class Location extends Provider implements ViewProvider
      * Returns a ContentView object corresponding to location found within $view.
      * Will basically run content/view legacy module with appropriate parameters.
      *
-     * @param \eZ\Publish\Core\MVC\Symfony\View\View $view
+     * @param \Ibexa\Core\MVC\Symfony\View\View $view
      *
-     * @return \eZ\Publish\Core\MVC\Symfony\View\ContentView|void
+     * @return \Ibexa\Core\MVC\Symfony\View\ContentView|void
      */
     public function getView(View $view)
     {
@@ -85,7 +85,7 @@ class Location extends Provider implements ViewProvider
     /**
      * Returns published view for $location.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
+     * @param \Ibexa\Contracts\Core\Repository\Values\Content\Location $location
      * @param string $viewType variation of display for your content
      * @param array $params Hash of arbitrary parameters to pass to final view
      * @param \eZ\Publish\Core\MVC\Legacy\Templating\LegacyHelper $legacyHelper
@@ -120,7 +120,7 @@ class Location extends Provider implements ViewProvider
     /**
      * Returns preview for $content (versionNo to display is held in $content->versionInfo).
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
+     * @param \Ibexa\Contracts\Core\Repository\Values\Content\Content $content
      * @param array $params Hash of arbitrary parameters to pass to final view
      * @param \eZ\Publish\Core\MVC\Legacy\Templating\LegacyHelper $legacyHelper
      *
@@ -128,7 +128,7 @@ class Location extends Provider implements ViewProvider
      */
     public function renderPreview(APIContent $content, array $params, LegacyHelper $legacyHelper)
     {
-        /** @var \eZ\Publish\Core\MVC\Symfony\SiteAccess $siteAccess */
+        /** @var \Ibexa\Core\MVC\Symfony\SiteAccess $siteAccess */
         $siteAccess = $this->getCurrentRequest()->attributes->get('siteaccess');
         $moduleResult = [];
 

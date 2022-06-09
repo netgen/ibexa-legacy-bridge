@@ -1,7 +1,7 @@
 parameters:
     ezpublish_legacy.view_decorator.options:
-        viewbaseLayout: "%ezpublish.content_view.viewbase_layout%"
-        contentBlockName: "%ezpublish.content_view.content_block_name%"
+        viewbaseLayout: "%ibexa.content_view.viewbase_layout%"
+        contentBlockName: "%ibexa.content_view.content_block_name%"
 
 services:
     ezpublish_legacy.view_provider:
@@ -15,7 +15,7 @@ services:
         parent: ezpublish_legacy.view_provider
         public: false
         tags:
-            - {name: ezpublish.view_provider, type: 'eZ\Publish\Core\MVC\Symfony\View\ContentView', priority: 4}
+            - {name: ibexa.view.provider, type: 'Ibexa\Core\MVC\Symfony\View\ContentView', priority: 4}
 
     ezpublish_legacy.location_view_provider:
         class: eZ\Publish\Core\MVC\Legacy\View\Provider\Location
@@ -27,12 +27,12 @@ services:
         tags:
             # Location view provider must have priority higher than content view provider to be able
             # to match the location first, in case it exists in the view
-            - {name: ezpublish.view_provider, type: 'eZ\Publish\Core\MVC\Symfony\View\ContentView', priority: 5}
+            - {name: ibexa.view.provider, type: 'Ibexa\Core\MVC\Symfony\View\ContentView', priority: 5}
 
     ezpublish_legacy.view_decorator.twig:
         class: eZ\Publish\Core\MVC\Legacy\View\TwigContentViewLayoutDecorator
         public: false
-        arguments: ["@twig", "%ezpublish_legacy.view_decorator.options%", "@ezpublish.config.resolver"]
+        arguments: ["@twig", "%ezpublish_legacy.view_decorator.options%", "@ibexa.config.resolver"]
 
     ezpublish_legacy.view_decorator:
         alias: ezpublish_legacy.view_decorator.twig

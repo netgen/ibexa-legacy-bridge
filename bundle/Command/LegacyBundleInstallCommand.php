@@ -108,7 +108,7 @@ EOT
      *
      * @return string The resulting link/directory
      */
-    protected function linkLegacyExtension($extensionPath, array $options = [], OutputInterface $output)
+    protected function linkLegacyExtension($extensionPath, array $options, OutputInterface $output)
     {
         $options += ['force' => false, 'copy' => false, 'relative' => false];
         $legacyRootDir = rtrim($this->legacyRootDir, '/');

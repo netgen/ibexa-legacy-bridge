@@ -8,7 +8,7 @@ namespace eZ\Bundle\EzPublishLegacyBundle\Tests\LegacyMapper;
 
 use eZ\Bundle\EzPublishLegacyBundle\LegacyMapper\SiteAccess as SiteAccessMapper;
 use eZ\Publish\Core\MVC\Legacy\Event\PreBuildKernelWebHandlerEvent;
-use eZ\Publish\Core\MVC\Symfony\SiteAccess;
+use Ibexa\Core\MVC\Symfony\SiteAccess;
 use eZSiteAccess;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\ParameterBag;
@@ -113,7 +113,7 @@ class SiteAccessTest extends TestCase
         $containerMock
             ->expects($this->once())
             ->method('get')
-            ->with('ezpublish.siteaccess')
+            ->with(SiteAccess::class)
             ->will($this->returnValue($siteAccess));
 
         $siteAccessMapper = new SiteAccessMapper([]);

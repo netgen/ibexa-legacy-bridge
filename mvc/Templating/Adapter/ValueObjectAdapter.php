@@ -7,7 +7,7 @@
 namespace eZ\Publish\Core\MVC\Legacy\Templating\Adapter;
 
 use eZ\Publish\Core\MVC\Legacy\Templating\LegacyCompatible;
-use eZ\Publish\API\Repository\Values\ValueObject;
+use Ibexa\Contracts\Core\Repository\Values\ValueObject;
 
 /**
  * Generic adapter allowing any ValueObject implementation to be LegacyCompatible with the help of a hash map,
@@ -16,7 +16,7 @@ use eZ\Publish\API\Repository\Values\ValueObject;
 class ValueObjectAdapter implements LegacyCompatible
 {
     /**
-     * @var \eZ\Publish\API\Repository\Values\ValueObject
+     * @var \Ibexa\Contracts\Core\Repository\Values\ValueObject
      */
     private $valueObject;
 
@@ -28,7 +28,7 @@ class ValueObjectAdapter implements LegacyCompatible
     private $attributesMap;
 
     /**
-     * @param \eZ\Publish\API\Repository\Values\ValueObject $valueObject The value object to decorate
+     * @param \Ibexa\Contracts\Core\Repository\Values\ValueObject $valueObject The value object to decorate
      * @param array $attributesMap hash mapping legacy attribute name (key) to the embedded value object property name (value)
      *                             Value can also be a closure which would be called directly with the value object as only parameter
      */
@@ -89,7 +89,7 @@ class ValueObjectAdapter implements LegacyCompatible
     }
 
     /**
-     * @return \eZ\Publish\API\Repository\Values\ValueObject
+     * @return \Ibexa\Contracts\Core\Repository\Values\ValueObject
      */
     public function getValueObject()
     {

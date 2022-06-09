@@ -12,7 +12,7 @@ use eZINI;
 use ezpSessionHandlerSymfony;
 use eZSession;
 use RuntimeException;
-use eZ\Publish\Core\MVC\Symfony\SiteAccess;
+use Ibexa\Core\MVC\Symfony\SiteAccess;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class CLIHandler implements ezpKernelHandler
@@ -44,7 +44,7 @@ class CLIHandler implements ezpKernelHandler
      * - injected-settings : INI settings override
      *
      * @param array $settings settings to pass to eZScript constructor
-     * @param \eZ\Publish\Core\MVC\Symfony\SiteAccess $siteAccess
+     * @param \Ibexa\Core\MVC\Symfony\SiteAccess $siteAccess
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
     public function __construct(array $settings = [], SiteAccess $siteAccess = null, ContainerInterface $container = null)

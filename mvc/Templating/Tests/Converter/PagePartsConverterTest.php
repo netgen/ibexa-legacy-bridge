@@ -7,10 +7,10 @@
 namespace eZ\Publish\Core\MVC\Legacy\Templating\Tests\Converter;
 
 use eZ\Publish\Core\MVC\Legacy\Templating\Converter\PagePartsConverter;
-use eZ\Publish\API\Repository\Values\ValueObject;
+use Ibexa\Contracts\Core\Repository\Values\ValueObject;
 use eZ\Publish\Core\MVC\Legacy\Templating\Adapter\BlockAdapter;
-use eZ\Publish\Core\FieldType\Page\Parts\Block;
-use eZ\Publish\Core\FieldType\Page\Parts\Zone;
+use Ibexa\Core\FieldType\Page\Parts\Block;
+use Ibexa\Core\FieldType\Page\Parts\Zone;
 use eZ\Publish\Core\MVC\Legacy\Templating\Adapter\ZoneAdapter;
 use PHPUnit\Framework\TestCase;
 
@@ -20,7 +20,7 @@ class PagePartsConverterTest extends TestCase
      * @dataProvider convertProvider
      * @covers \eZ\Publish\Core\MVC\Legacy\Templating\Converter\PagePartsConverter::convert
      *
-     * @param \eZ\Publish\API\Repository\Values\ValueObject $valueObject
+     * @param \Ibexa\Contracts\Core\Repository\Values\ValueObject $valueObject
      * @param $expectedAdapterClass
      */
     public function testConvert(ValueObject $valueObject, $expectedAdapterClass)

@@ -6,7 +6,7 @@
  */
 namespace eZ\Publish\Core\MVC\Legacy\Templating\Tests\Adapter;
 
-use eZ\Publish\API\Repository\Values\ValueObject;
+use Ibexa\Contracts\Core\Repository\Values\ValueObject;
 use eZ\Publish\Core\MVC\Legacy\Templating\Adapter\DefinitionBasedAdapter;
 
 class DefinitionBasedAdapterTest extends ValueObjectAdapterTest

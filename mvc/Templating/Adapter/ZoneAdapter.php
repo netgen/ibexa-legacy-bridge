@@ -6,7 +6,7 @@
  */
 namespace eZ\Publish\Core\MVC\Legacy\Templating\Adapter;
 
-use eZ\Publish\Core\FieldType\Page\Parts\Zone;
+use Ibexa\Core\FieldType\Page\Parts\Zone;
 
 /**
  * Adapter for Page\Parts\Zone objects.

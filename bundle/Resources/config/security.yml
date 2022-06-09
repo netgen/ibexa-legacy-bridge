@@ -1,13 +1,13 @@
 services:
     ezpublish_legacy.security.voter.core:
         class: eZ\Publish\Core\MVC\Legacy\Security\Voter\VoterDecorator
-        decorates: ezpublish.security.voter.core
+        decorates: Ibexa\Core\MVC\Symfony\Security\Authorization\Voter\CoreVoter
         public: false
         arguments: ["@ezpublish_legacy.security.voter.core.inner", "@ezpublish_legacy.kernel"]
 
     ezpublish_legacy.security.voter.value_object:
         class: eZ\Publish\Core\MVC\Legacy\Security\Voter\VoterDecorator
-        decorates: ezpublish.security.voter.value_object
+        decorates: Ibexa\Core\MVC\Symfony\Security\Authorization\Voter\ValueObjectVoter
         public: false
         arguments: ["@ezpublish_legacy.security.voter.value_object.inner", "@ezpublish_legacy.kernel"]
 
@@ -20,7 +20,7 @@ services:
     ezpublish_legacy.security_mapper:
         class: eZ\Bundle\EzPublishLegacyBundle\LegacyMapper\Security
         public: false
-        arguments: ["@ezpublish.api.repository", "@ezpublish.config.resolver", "@security.token_storage", "@security.authorization_checker"]
+        arguments: ["@ibexa.api.repository", "@ibexa.config.resolver", "@security.token_storage", "@security.authorization_checker"]
         tags:
             - { name: kernel.event_subscriber }
 
@@ -36,4 +36,4 @@ services:
             - "@?event_dispatcher"
         calls:
             - [setLegacyKernelClosure, ["@ezpublish_legacy.kernel"]]
-            - [setUserService, ["@ezpublish.api.service.user"]]
+            - [setUserService, ["@ibexa.api.service.user"]]

@@ -6,16 +6,16 @@
  */
 namespace eZ\Bundle\EzPublishLegacyBundle\Controller;
 
-use eZ\Publish\API\Repository\ContentService;
-use eZ\Publish\API\Repository\LocationService;
-use eZ\Publish\Core\Helper\ContentPreviewHelper;
-use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
+use Ibexa\Contracts\Core\Repository\ContentService;
+use Ibexa\Contracts\Core\Repository\LocationService;
+use Ibexa\Core\Helper\ContentPreviewHelper;
+use Ibexa\Core\MVC\Symfony\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Templating\EngineInterface;
-use eZ\Publish\Core\MVC\Symfony\Security\Authorization\Attribute as AuthorizationAttribute;
+use Ibexa\Core\MVC\Symfony\Security\Authorization\Attribute as AuthorizationAttribute;
 
 class WebsiteToolbarController extends Controller
 {
@@ -28,10 +28,10 @@ class WebsiteToolbarController extends Controller
     /** @var \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface */
     private $authChecker;
 
-    /** @var \eZ\Publish\API\Repository\LocationService */
+    /** @var \Ibexa\Contracts\Core\Repository\LocationService */
     private $locationService;
 
-    /** @var \eZ\Publish\API\Repository\ContentService */
+    /** @var \Ibexa\Contracts\Core\Repository\ContentService */
     private $contentService;
 
     /** @var ContentPreviewHelper */
@@ -78,7 +78,7 @@ class WebsiteToolbarController extends Controller
      *
      * @return Response
      */
-    public function websiteToolbarAction($locationId = null, $originalSemanticPathInfo = '', Request $request)
+    public function websiteToolbarAction(Request $request, $locationId = null, $originalSemanticPathInfo = '')
     {
         $response = $this->buildResponse();
 
@@ -150,7 +150,7 @@ class WebsiteToolbarController extends Controller
     }
 
     /**
-     * @return \eZ\Publish\API\Repository\Values\Content\Content
+     * @return \Ibexa\Contracts\Core\Repository\Values\Content\Content
      */
     protected function loadContentByLocationId($locationId)
     {

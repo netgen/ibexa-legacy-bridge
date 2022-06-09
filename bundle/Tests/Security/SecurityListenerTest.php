@@ -7,7 +7,7 @@
 namespace eZ\Bundle\EzPublishLegacyBundle\Tests\Security;
 
 use eZ\Bundle\EzPublishLegacyBundle\Security\SecurityListener;
-use eZ\Publish\Core\MVC\Symfony\Security\Tests\EventListener\SecurityListenerTest as BaseTest;
+use Ibexa\Core\MVC\Symfony\Security\Tests\EventListener\SecurityListenerTest as BaseTest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;

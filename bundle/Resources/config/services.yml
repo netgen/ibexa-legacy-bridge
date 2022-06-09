@@ -12,10 +12,10 @@ parameters:
 
     ezpublish_legacy.siteaccess_mapper.options: { fragment_path: "%fragment.path%" }
     ezpublish_legacy.configuration_mapper.options:
-        imagemagick_enabled: "%ezpublish.image.imagemagick.enabled%"
-        imagemagick_executable_path: "%ezpublish.image.imagemagick.executable_path%"
-        imagemagick_executable: "%ezpublish.image.imagemagick.executable%"
-        imagemagick_filters: "%ezpublish.image.imagemagick.filters%"
+        imagemagick_enabled: "%ibexa.image.imagemagick.enabled%"
+        imagemagick_executable_path: "%ibexa.image.imagemagick.executable_path%"
+        imagemagick_executable: "%ibexa.image.imagemagick.executable%"
+        imagemagick_filters: "%ibexa.image.imagemagick.filters%"
 
     ezpublish_legacy.config.default_scope: site
 
@@ -41,7 +41,7 @@ services:
             - "%webroot_dir%"
             - "@event_dispatcher"
             - "@ezpublish_legacy.uri_helper"
-            - "@ezpublish.siteaccess"
+            - "@Ibexa\\Core\\MVC\\Symfony\\SiteAccess"
             - "@?logger"
         calls:
             - [setContainer, ["@service_container"]]
@@ -84,14 +84,14 @@ services:
     ezpublish_legacy.response_manager:
         class: eZ\Bundle\EzPublishLegacyBundle\LegacyResponse\LegacyResponseManager
         public: false
-        arguments: ["@templating", "@ezpublish.config.resolver", "@request_stack"]
+        arguments: ["@templating", "@ibexa.config.resolver", "@request_stack"]
 
     ezpublish_legacy.controller:
         class: eZ\Bundle\EzPublishLegacyBundle\Controller\LegacyKernelController
         public: true
         arguments:
             - "@ezpublish_legacy.kernel"
-            - "@ezpublish.config.resolver"
+            - "@ibexa.config.resolver"
             - "@ezpublish_legacy.uri_helper"
             - "@ezpublish_legacy.response_manager"
             - "@ezpublish_legacy.templating.legacy_helper"
@@ -104,7 +104,7 @@ services:
             - "@ezpublish_legacy.kernel_handler.treemenu"
             - "@ezpublish_legacy.kernel.lazy_loader"
             - "%ezpublish_legacy.treemenu.controller.options%"
-        parent: ezpublish.controller.base
+        parent: Ibexa\Core\MVC\Symfony\Controller\Controller
 
     ezpublish_legacy.rest.controller:
         class: eZ\Bundle\EzPublishLegacyBundle\Controller\LegacyRestController
@@ -112,29 +112,41 @@ services:
         arguments:
             - "@ezpublish_legacy.rest.kernel_handler"
             - "@ezpublish_legacy.kernel.lazy_loader"
-        parent: ezpublish.controller.base
+        parent: Ibexa\Core\MVC\Symfony\Controller\Controller
 
     ezpublish_legacy.preview.controller:
         class: eZ\Bundle\EzPublishLegacyBundle\Controller\PreviewController
         public: true
-        parent: ezpublish.controller.content.preview.core
+        arguments:
+            - '@ibexa.api.service.content'
+            - "@http_kernel"
+            - '@Ibexa\Core\Helper\ContentPreviewHelper'
+            - "@security.authorization_checker"
+            - '@Ibexa\Core\Helper\PreviewLocationProvider'
+            - '@Ibexa\Core\MVC\Symfony\View\CustomLocationControllerChecker'
         calls:
-            - [setConfigResolver, ["@ezpublish.config.resolver"]]
+            - [setConfigResolver, ["@ibexa.config.resolver"]]
+        tags:
+            - { name: controller.service_arguments }
 
-    ezpublish.controller.content.preview:
+    ibexa.controller.content.preview:
+        alias: ezpublish_legacy.preview.controller
+        public: true
+
+    Ibexa\Core\MVC\Symfony\Controller\Content\PreviewController:
         alias: ezpublish_legacy.preview.controller
         public: true
 
     ezpublish_legacy.website_toolbar.controller:
         class: eZ\Bundle\EzPublishLegacyBundle\Controller\WebsiteToolbarController
         public: true
-        parent: ezpublish.controller.base
+        parent: Ibexa\Core\MVC\Symfony\Controller\Controller
         arguments:
             - "@templating.engine.eztpl"
-            - "@ezpublish.api.service.content"
-            - "@ezpublish.api.service.location"
+            - "@ibexa.api.service.content"
+            - "@ibexa.api.service.location"
             - "@security.authorization_checker"
-            - "@ezpublish.content_preview_helper"
+            - "@Ibexa\\Core\\Helper\\ContentPreviewHelper"
             - "$content.view_cache$"
             - "$content.ttl_cache$"
             - "$content.default_ttl$"
@@ -156,13 +168,13 @@ services:
         class: eZ\Bundle\EzPublishLegacyBundle\Routing\UrlGenerator
         public: false
         arguments: ["@ezpublish_legacy.kernel"]
-        parent: ezpublish.url_generator.base
+        parent: Ibexa\Core\MVC\Symfony\Routing\Generator
 
     ezpublish_legacy.siteaccess_mapper:
         class: eZ\Bundle\EzPublishLegacyBundle\LegacyMapper\SiteAccess
         public: false
         arguments:
-            - "@ezpublish.siteaccess"
+            - "@Ibexa\\Core\\MVC\\Symfony\\SiteAccess"
             - "%ezpublish_legacy.siteaccess_mapper.options%"
         tags:
             - { name: kernel.event_subscriber }
@@ -190,11 +202,11 @@ services:
         class: eZ\Bundle\EzPublishLegacyBundle\LegacyMapper\Configuration
         public: false
         arguments:
-            - "@ezpublish.config.resolver"
+            - "@ibexa.config.resolver"
             - "@ezpublish_legacy.switchable_http_cache_purger"
             - "@ezpublish_legacy.persistence_cache_purger"
-            - "@ezpublish.urlalias_generator"
-            - "@ezpublish.persistence.connection"
+            - "@Ibexa\\Core\\MVC\\Symfony\\Routing\\Generator\\UrlAliasGenerator"
+            - "@ibexa.persistence.connection"
             - "@ezpublish_legacy.image_alias.cleaner"
             - "%ezpublish_legacy.configuration_mapper.options%"
         calls:
@@ -214,8 +226,8 @@ services:
         class: eZ\Bundle\EzPublishLegacyBundle\Cache\PersistenceCachePurger
         public: false
         arguments:
-            - "@ezpublish.cache_pool"
-            - "@ezpublish.spi.persistence.cache.locationHandler"
+            - "@ibexa.cache_pool"
+            - "@Ibexa\\Core\\Persistence\\Cache\\LocationHandler"
             - '@Ibexa\Core\Persistence\Cache\Identifier\CacheIdentifierGeneratorInterface'
             - '%ezpublish_legacy.clear_all_spi_cache_on_symfony_clear_cache%'
             - '%ezpublish_legacy.clear_all_spi_cache_from_legacy%'
@@ -231,7 +243,7 @@ services:
             - "@ezpublish_legacy.configuration_mapper"
             - "@filesystem"
             - "%ezpublish_legacy.root_dir%"
-            - "@ezpublish.siteaccess"
+            - "@Ibexa\\Core\\MVC\\Symfony\\SiteAccess"
         tags:
             - { name: kernel.cache_clearer }
         lazy: true
@@ -239,7 +251,7 @@ services:
     ezpublish_legacy.switchable_http_cache_purger:
         class: eZ\Bundle\EzPublishLegacyBundle\Cache\SwitchableHttpCachePurger
         public: false
-        arguments: ["@ezplatform.http_cache.purge_client"]
+        arguments: ["@ibexa.http_cache.purge_client"]
 
     ezpublish_legacy.content_exception_handler:
         class: eZ\Publish\Core\MVC\Legacy\EventListener\APIContentExceptionListener
@@ -253,8 +265,6 @@ services:
         public: false
         arguments: ["@ezpublish_legacy.kernel", "%ezpublish_legacy.config.default_scope%"]
         lazy: true
-        tags:
-            - { name: ezpublish.config.resolver, priority: -255 }
 
     ezpublish_legacy.setup_wizard.configuration_converter:
         class: eZ\Bundle\EzPublishLegacyBundle\SetupWizard\ConfigurationConverter
@@ -270,14 +280,14 @@ services:
     ezpublish_legacy.rest_listener:
         class: eZ\Bundle\EzPublishLegacyBundle\EventListener\RestListener
         public: false
-        arguments: ["%ezpublish_rest.csrf_token_intention%"]
+        arguments: ["%ibexa.rest.csrf_token_intention%"]
         tags:
             - { name: kernel.event_subscriber }
 
     ezpublish_legacy.request_listener:
         class: eZ\Bundle\EzPublishLegacyBundle\EventListener\RequestListener
         public: false
-        arguments: ["@ezpublish.config.resolver", "@ezpublish.api.repository", "@security.token_storage"]
+        arguments: ["@ibexa.config.resolver", "@ibexa.api.repository", "@security.token_storage"]
         tags:
             - { name: kernel.event_subscriber }
 
@@ -312,6 +322,6 @@ services:
         public: false
         arguments:
             - "@router"
-            - "%ezpublish.siteaccess.default%"
+            - "%ibexa.site_access.default%"
         tags:
             - { name: kernel.event_subscriber }

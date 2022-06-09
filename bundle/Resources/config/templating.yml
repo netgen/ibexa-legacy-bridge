@@ -40,16 +40,16 @@ services:
         public: false
         arguments: ["@ezpublish_legacy.kernel"]
         tags:
-            - {name: ezpublish_legacy.templating.converter, for: eZ\Publish\Core\Repository\Values\Content\Content}
-            - {name: ezpublish_legacy.templating.converter, for: eZ\Publish\Core\Repository\Values\Content\Location}
-            - {name: ezpublish_legacy.templating.converter, for: eZ\Publish\Core\Repository\Values\Content\VersionInfo}
+            - {name: ezpublish_legacy.templating.converter, for: Ibexa\Core\Repository\Values\Content\Content}
+            - {name: ezpublish_legacy.templating.converter, for: Ibexa\Core\Repository\Values\Content\Location}
+            - {name: ezpublish_legacy.templating.converter, for: Ibexa\Core\Repository\Values\Content\VersionInfo}
 
     ezpublish_legacy.templating.pageparts_converter:
         class: eZ\Publish\Core\MVC\Legacy\Templating\Converter\PagePartsConverter
         public: false
         tags:
-            - {name: ezpublish_legacy.templating.converter, for: eZ\Publish\Core\FieldType\Page\Parts\Block}
-            - {name: ezpublish_legacy.templating.converter, for: eZ\Publish\Core\FieldType\Page\Parts\Zone}
+            - {name: ezpublish_legacy.templating.converter, for: Ibexa\Core\FieldType\Page\Parts\Block}
+            - {name: ezpublish_legacy.templating.converter, for: Ibexa\Core\FieldType\Page\Parts\Zone}
 
     ezpublish_legacy.templating.legacy_helper:
         class: eZ\Publish\Core\MVC\Legacy\Templating\LegacyHelper
@@ -58,13 +58,23 @@ services:
 
     ezpublish.templating.global_helper.legacy:
         class: eZ\Publish\Core\MVC\Legacy\Templating\GlobalHelper
-        parent: ezpublish.templating.global_helper.core
+        arguments:
+            - "@ibexa.config.resolver"
+            - "@ibexa.siteaccessaware.service.location"
+            - "@router"
+            - "@Ibexa\\Core\\Helper\\TranslationHelper"
         public: false
         calls:
+            - [setRequestStack, ["@request_stack"]]
             - [setLegacyHelper, ["@ezpublish_legacy.templating.legacy_helper"]]
 
     # Overriding core helper
-    ezpublish.templating.global_helper:
+    ibexa.templating.global_helper:
+        alias: ezpublish.templating.global_helper.legacy
+        # Needs to be public to use the service as a Twig global variable
+        public: true
+
+    Ibexa\Core\MVC\Symfony\Templating\GlobalHelper:
         alias: ezpublish.templating.global_helper.legacy
         # Needs to be public to use the service as a Twig global variable
         public: true

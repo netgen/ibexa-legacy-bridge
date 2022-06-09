@@ -7,7 +7,7 @@
 namespace eZ\Bundle\EzPublishLegacyBundle\Cache;
 
 use eZ\Bundle\EzPublishLegacyBundle\LegacyMapper\Configuration;
-use eZ\Publish\Core\MVC\Symfony\SiteAccess;
+use Ibexa\Core\MVC\Symfony\SiteAccess;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface;
 use eZCacheHelper;

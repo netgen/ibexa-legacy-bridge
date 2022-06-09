@@ -6,9 +6,9 @@
  */
 namespace eZ\Publish\Core\MVC\Legacy\Templating\Converter;
 
-use eZ\Publish\API\Repository\Values\Content\Content;
-use eZ\Publish\API\Repository\Values\Content\Location;
-use eZ\Publish\API\Repository\Values\Content\VersionInfo;
+use Ibexa\Contracts\Core\Repository\Values\Content\Content;
+use Ibexa\Contracts\Core\Repository\Values\Content\Location;
+use Ibexa\Contracts\Core\Repository\Values\Content\VersionInfo;
 use eZContentObject;
 use eZContentObjectTreeNode;
 use eZContentObjectVersion;
@@ -23,7 +23,7 @@ class ApiContentConverter implements MultipleObjectConverter
     /**
      * Hash of API objects to be converted, indexed by alias.
      *
-     * @var \eZ\Publish\API\Repository\Values\ValueObject[]
+     * @var \Ibexa\Contracts\Core\Repository\Values\ValueObject[]
      */
     private $apiObjects;
 

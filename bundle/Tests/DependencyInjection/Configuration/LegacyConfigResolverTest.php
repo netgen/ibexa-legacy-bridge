@@ -8,7 +8,7 @@ namespace eZ\Bundle\EzPublishLegacyBundle\Tests\DependencyInjection\Configuratio
 
 use eZ\Bundle\EzPublishLegacyBundle\DependencyInjection\Configuration\LegacyConfigResolver;
 use PHPUnit\Framework\TestCase;
-use eZ\Publish\Core\MVC\Exception\ParameterNotFoundException;
+use Ibexa\Core\MVC\Exception\ParameterNotFoundException;
 use ezpKernelHandler;
 
 class LegacyConfigResolverTest extends TestCase
@@ -76,7 +76,7 @@ class LegacyConfigResolverTest extends TestCase
 
     public function testGetParameterInvalidParam()
     {
-        $this->expectException(\eZ\Publish\Core\MVC\Exception\ParameterNotFoundException::class);
+        $this->expectException(\Ibexa\Core\MVC\Exception\ParameterNotFoundException::class);
 
         $this->legacyKernel
             ->expects($this->never())
@@ -108,7 +108,7 @@ class LegacyConfigResolverTest extends TestCase
 
     public function testGetNonExistentParameter()
     {
-        $this->expectException(\eZ\Publish\Core\MVC\Exception\ParameterNotFoundException::class);
+        $this->expectException(\Ibexa\Core\MVC\Exception\ParameterNotFoundException::class);
 
         $paramName = 'Foo.Bar';
         $namespace = 'foo';

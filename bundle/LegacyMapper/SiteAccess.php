@@ -8,10 +8,10 @@ namespace eZ\Bundle\EzPublishLegacyBundle\LegacyMapper;
 
 use eZ\Publish\Core\MVC\Legacy\LegacyEvents;
 use eZ\Publish\Core\MVC\Legacy\Event\PreBuildKernelWebHandlerEvent;
-use eZ\Publish\Core\MVC\Symfony\SiteAccess\Matcher\CompoundInterface;
+use Ibexa\Core\MVC\Symfony\SiteAccess\Matcher\CompoundInterface;
 use eZSiteAccess;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use eZ\Publish\Core\MVC\Symfony\SiteAccess as CoreSiteAccess;
+use Ibexa\Core\MVC\Symfony\SiteAccess as CoreSiteAccess;
 
 /**
  * Maps the SiteAccess object to the legacy parameters.
@@ -19,7 +19,7 @@ use eZ\Publish\Core\MVC\Symfony\SiteAccess as CoreSiteAccess;
 class SiteAccess implements EventSubscriberInterface
 {
     /**
-     * @var \eZ\Publish\Core\MVC\Symfony\SiteAccess
+     * @var \Ibexa\Core\MVC\Symfony\SiteAccess
      */
     protected $siteAccess;
 

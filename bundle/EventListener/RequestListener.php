@@ -6,28 +6,28 @@
  */
 namespace eZ\Bundle\EzPublishLegacyBundle\EventListener;
 
-use eZ\Publish\API\Repository\Exceptions\NotFoundException;
-use eZ\Publish\API\Repository\Repository;
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Ibexa\Contracts\Core\Repository\Exceptions\NotFoundException;
+use Ibexa\Contracts\Core\Repository\Repository;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use eZ\Publish\Core\MVC\Legacy\Security\LegacyToken;
-use eZ\Publish\Core\Repository\Values\User\UserReference;
+use Ibexa\Core\Repository\Values\User\UserReference;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use eZ\Publish\Core\MVC\Symfony\Security\User;
+use Ibexa\Core\MVC\Symfony\Security\User;
 
 class RequestListener implements EventSubscriberInterface
 {
     /**
-     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
+     * @var \Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface
      */
     private $configResolver;
 
     /**
-     * @var \eZ\Publish\API\Repository\Repository
+     * @var \Ibexa\Contracts\Core\Repository\Repository
      */
     private $repository;
 
@@ -58,7 +58,7 @@ class RequestListener implements EventSubscriberInterface
      */
     public function onKernelRequest(RequestEvent $event)
     {
-        /** @var \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver */
+        /** @var \Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface $configResolver */
         $request = $event->getRequest();
         $session = $request->getSession();
         if (

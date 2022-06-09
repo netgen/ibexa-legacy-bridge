@@ -6,7 +6,7 @@
  */
 namespace eZ\Publish\Core\MVC\Legacy\SignalSlot;
 
-use eZ\Publish\Core\SignalSlot\Slot;
+use Ibexa\Core\SignalSlot\Slot;
 use Closure;
 use ezpKernelHandler;
 

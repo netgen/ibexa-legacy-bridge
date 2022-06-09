@@ -7,7 +7,7 @@
 namespace eZ\Bundle\EzPublishLegacyBundle\Tests\SetupWizard;
 
 use eZ\Bundle\EzPublishLegacyBundle\SetupWizard\ConfigurationDumper;
-use eZ\Publish\Core\MVC\Symfony\ConfigDumperInterface;
+use Ibexa\Core\MVC\Symfony\ConfigDumperInterface;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Filesystem\Filesystem;
 use PHPUnit\Framework\TestCase;

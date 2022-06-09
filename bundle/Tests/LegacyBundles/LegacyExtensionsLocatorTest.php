@@ -28,11 +28,11 @@ class LegacyExtensionsLocatorTest extends TestCase
 
         self::assertEquals(
             [
-                vfsStream::url('eZ/TestBundle/ezpublish_legacy/extension1'),
-                vfsStream::url('eZ/TestBundle/ezpublish_legacy/extension2'),
-                vfsStream::url('eZ/TestBundle/ezpublish_legacy/extension3'),
+                vfsStream::url('Ibexa/TestBundle/ezpublish_legacy/extension1'),
+                vfsStream::url('Ibexa/TestBundle/ezpublish_legacy/extension2'),
+                vfsStream::url('Ibexa/TestBundle/ezpublish_legacy/extension3'),
             ],
-            $locator->getExtensionDirectories(vfsStream::url('eZ/TestBundle/'))
+            $locator->getExtensionDirectories(vfsStream::url('Ibexa/TestBundle/'))
         );
     }
 
@@ -52,7 +52,7 @@ class LegacyExtensionsLocatorTest extends TestCase
 
         $bundle->expects($this->once())
             ->method('getPath')
-            ->willReturn(vfsStream::url('eZ/TestBundle/'));
+            ->willReturn(vfsStream::url('Ibexa/TestBundle/'));
 
         $bundle->expects($this->once())
             ->method('getLegacyExtensionsNames')
@@ -74,7 +74,7 @@ class LegacyExtensionsLocatorTest extends TestCase
     protected function initVfs()
     {
         $structure = [
-            'eZ' => [
+            'Ibexa' => [
                 'TestBundle' => [
                     'ezpublish_legacy' => [
                         'extension1' => ['extension.xml' => ''],

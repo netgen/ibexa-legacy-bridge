@@ -7,11 +7,11 @@
 namespace eZ\Bundle\EzPublishLegacyBundle\Tests\Controller;
 
 use eZ\Bundle\EzPublishLegacyBundle\Controller\PreviewController;
-use eZ\Publish\API\Repository\Values\Content\Content;
-use eZ\Publish\API\Repository\Values\Content\Location;
-use eZ\Publish\Core\MVC\Symfony\Controller\Tests\Controller\Content\PreviewControllerTest as BasePreviewControllerTest;
-use eZ\Publish\Core\MVC\Symfony\SiteAccess;
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Ibexa\Contracts\Core\Repository\Values\Content\Content;
+use Ibexa\Contracts\Core\Repository\Values\Content\Location;
+use Ibexa\Core\MVC\Symfony\Controller\Tests\Controller\Content\PreviewControllerTest as BasePreviewControllerTest;
+use Ibexa\Core\MVC\Symfony\SiteAccess;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 
 class PreviewControllerTest extends BasePreviewControllerTest
 {

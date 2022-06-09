@@ -8,7 +8,7 @@ namespace eZ\Bundle\EzPublishLegacyBundle\Tests\LegacyResponse;
 
 use eZ\Bundle\EzPublishLegacyBundle\LegacyResponse\LegacyResponseManager;
 use eZ\Bundle\EzPublishLegacyBundle\LegacyResponse;
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;

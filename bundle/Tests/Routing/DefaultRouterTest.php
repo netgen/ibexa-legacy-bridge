@@ -4,9 +4,9 @@
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
-namespace eZ\Bundle\EzPublishLegacyBundle\Tests\Routing\DefaultRouterTest;
+namespace eZ\Bundle\EzPublishLegacyBundle\Tests\Routing;
 
-use eZ\Bundle\EzPublishCoreBundle\Tests\Routing\DefaultRouterTest as BaseTest;
+use Ibexa\Tests\Bundle\Core\Routing\DefaultRouterTest as BaseTest;
 use Symfony\Component\HttpFoundation\Request;
 use eZ\Bundle\EzPublishLegacyBundle\Routing\DefaultRouter;
 

@@ -7,13 +7,13 @@
 namespace eZ\Bundle\EzPublishLegacyBundle\LegacyMapper;
 
 use Doctrine\DBAL\Connection;
-use eZ\Publish\Core\FieldType\Image\AliasCleanerInterface;
+use Ibexa\Core\FieldType\Image\AliasCleanerInterface;
 use eZ\Publish\Core\MVC\Legacy\LegacyEvents;
 use eZ\Publish\Core\MVC\Legacy\Event\PreBuildKernelEvent;
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
-use EzSystems\PlatformHttpCacheBundle\PurgeClient\PurgeClientInterface;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
+use Ibexa\Contracts\HttpCache\PurgeClient\PurgeClientInterface;
 use eZ\Bundle\EzPublishLegacyBundle\Cache\PersistenceCachePurger;
-use eZ\Publish\Core\MVC\Symfony\Routing\Generator\UrlAliasGenerator;
+use Ibexa\Core\MVC\Symfony\Routing\Generator\UrlAliasGenerator;
 use ezpEvent;
 use ezxFormToken;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -29,12 +29,12 @@ class Configuration implements EventSubscriberInterface
     use ContainerAwareTrait;
 
     /**
-     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
+     * @var \Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface
      */
     private $configResolver;
 
     /**
-     * @var \EzSystems\PlatformHttpCacheBundle\PurgeClient\PurgeClientInterface
+     * @var \Ibexa\Contracts\HttpCache\PurgeClient\PurgeClientInterface
      */
     private $purgeClient;
 
@@ -44,7 +44,7 @@ class Configuration implements EventSubscriberInterface
     private $persistenceCachePurger;
 
     /**
-     * @var \eZ\Publish\Core\MVC\Symfony\Routing\Generator\UrlAliasGenerator
+     * @var \Ibexa\Core\MVC\Symfony\Routing\Generator\UrlAliasGenerator
      */
     private $urlAliasGenerator;
 

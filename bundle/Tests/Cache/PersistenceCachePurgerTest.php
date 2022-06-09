@@ -7,8 +7,8 @@
 namespace eZ\Bundle\EzPublishLegacyBundle\Tests\Cache;
 
 use eZ\Bundle\EzPublishLegacyBundle\Cache\PersistenceCachePurger;
-use eZ\Publish\SPI\Persistence\Content\Location;
-use eZ\Publish\SPI\Persistence\Content\Location\Handler;
+use Ibexa\Contracts\Core\Persistence\Content\Location;
+use Ibexa\Contracts\Core\Persistence\Content\Location\Handler;
 use Ibexa\Core\Persistence\Cache\Identifier\CacheIdentifierGeneratorInterface;
 use Symfony\Component\Cache\Adapter\TagAwareAdapterInterface;
 use PHPUnit\Framework\TestCase;
@@ -220,7 +220,7 @@ class PersistenceCachePurgerTest extends TestCase
      * @param $locationId
      * @param $contentId
      *
-     * @return \eZ\Publish\SPI\Persistence\Content\Location
+     * @return \Ibexa\Contracts\Core\Persistence\Content\Location
      */
     private function buildLocation($locationId, $contentId)
     {
@@ -237,7 +237,7 @@ class PersistenceCachePurgerTest extends TestCase
      */
     public function testClearContentFail()
     {
-        $this->expectException(\eZ\Publish\Core\Base\Exceptions\InvalidArgumentType::class);
+        $this->expectException(\Ibexa\Core\Base\Exceptions\InvalidArgumentType::class);
 
         $this->cachePurger->content(new \stdClass());
     }
@@ -292,7 +292,7 @@ class PersistenceCachePurgerTest extends TestCase
      */
     public function testClearContentTypeFail()
     {
-        $this->expectException(\eZ\Publish\Core\Base\Exceptions\InvalidArgumentType::class);
+        $this->expectException(\Ibexa\Core\Base\Exceptions\InvalidArgumentType::class);
 
         $this->cachePurger->contentType(new \stdClass());
     }
@@ -328,7 +328,7 @@ class PersistenceCachePurgerTest extends TestCase
      */
     public function testClearContentTypeGroupFail()
     {
-        $this->expectException(\eZ\Publish\Core\Base\Exceptions\InvalidArgumentType::class);
+        $this->expectException(\Ibexa\Core\Base\Exceptions\InvalidArgumentType::class);
 
         $this->cachePurger->contentTypeGroup(new \stdClass());
     }
@@ -361,7 +361,7 @@ class PersistenceCachePurgerTest extends TestCase
      */
     public function testClearSectionFail()
     {
-        $this->expectException(\eZ\Publish\Core\Base\Exceptions\InvalidArgumentType::class);
+        $this->expectException(\Ibexa\Core\Base\Exceptions\InvalidArgumentType::class);
 
         $this->cachePurger->section(new \stdClass());
     }
@@ -460,7 +460,7 @@ class PersistenceCachePurgerTest extends TestCase
      */
     public function testClearUserFail()
     {
-        $this->expectException(\eZ\Publish\Core\Base\Exceptions\InvalidArgumentType::class);
+        $this->expectException(\Ibexa\Core\Base\Exceptions\InvalidArgumentType::class);
 
         $this->cachePurger->user(new \stdClass());
     }

@@ -11,7 +11,7 @@ use eZ\Publish\Core\MVC\Legacy\Kernel\URIHelper;
 use eZ\Publish\Core\MVC\Legacy\Templating\LegacyHelper;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use ezpKernelRedirect;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -26,7 +26,7 @@ class LegacyKernelController
     private $kernelClosure;
 
     /**
-     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
+     * @var \Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface
      */
     private $configResolver;
 

@@ -6,8 +6,8 @@
  */
 namespace eZ\Bundle\EzPublishLegacyBundle\FieldType\Image\IO;
 
-use eZ\Publish\Core\IO\IOServiceInterface;
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Ibexa\Core\IO\IOServiceInterface;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 
 /**
  * Factory for the Legacy Image IOService.
@@ -15,13 +15,13 @@ use eZ\Publish\Core\MVC\ConfigResolverInterface;
  */
 class IOServiceFactory
 {
-    /** @var \eZ\Publish\Core\IO\IOServiceInterface */
+    /** @var \Ibexa\Core\IO\IOServiceInterface */
     private $publishedIOService;
 
-    /** @var \eZ\Publish\Core\IO\IOServiceInterface */
+    /** @var \Ibexa\Core\IO\IOServiceInterface */
     private $draftIOService;
 
-    /** @var \eZ\Publish\Core\MVC\ConfigResolverInterface */
+    /** @var \Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface */
     private $configResolver;
 
     public function __construct(IOServiceInterface $publishedIOService, IOServiceInterface $draftIOService, ConfigResolverInterface $configResolver)
@@ -36,7 +36,7 @@ class IOServiceFactory
      *
      * @param string $class
      *
-     * @return \eZ\Publish\Core\IO\IOServiceInterface
+     * @return \Ibexa\Core\IO\IOServiceInterface
      */
     public function buildService($class)
     {

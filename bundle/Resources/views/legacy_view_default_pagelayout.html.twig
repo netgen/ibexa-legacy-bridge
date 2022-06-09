@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>{% for element in ezpublish.legacy.get( 'title_path' )|reverse|slice( 0, 2 ) %}
+    <title>{% for element in ibexa.legacy.get( 'title_path' )|reverse|slice( 0, 2 ) %}
         {{ element.text }}{% if not loop.last %} / {% endif %}
     {%endfor %}</title>
 </head>

@@ -6,7 +6,7 @@
  */
 namespace eZ\Bundle\EzPublishLegacyBundle\FieldType\Page;
 
-use eZ\Bundle\EzPublishCoreBundle\FieldType\Page\PageService as CorePageService;
+use Ibexa\Bundle\Core\FieldType\Page\PageService as CorePageService;
 
 class PageService extends CorePageService
 {

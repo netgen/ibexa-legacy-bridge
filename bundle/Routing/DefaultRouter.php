@@ -6,7 +6,7 @@
  */
 namespace eZ\Bundle\EzPublishLegacyBundle\Routing;
 
-use eZ\Bundle\EzPublishCoreBundle\Routing\DefaultRouter as BaseRouter;
+use Ibexa\Bundle\Core\Routing\DefaultRouter as BaseRouter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 

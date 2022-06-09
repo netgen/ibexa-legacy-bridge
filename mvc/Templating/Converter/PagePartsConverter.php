@@ -6,8 +6,8 @@
  */
 namespace eZ\Publish\Core\MVC\Legacy\Templating\Converter;
 
-use eZ\Publish\Core\FieldType\Page\Parts\Block;
-use eZ\Publish\Core\FieldType\Page\Parts\Zone;
+use Ibexa\Core\FieldType\Page\Parts\Block;
+use Ibexa\Core\FieldType\Page\Parts\Zone;
 use eZ\Publish\Core\MVC\Legacy\Templating\Adapter\BlockAdapter;
 use eZ\Publish\Core\MVC\Legacy\Templating\Adapter\ZoneAdapter;
 use InvalidArgumentException;

@@ -13,7 +13,7 @@ use eZ\Publish\Core\MVC\Legacy\Kernel as LegacyKernel;
 use eZ\Publish\Core\MVC\Legacy\LegacyEvents;
 use eZ\Publish\Core\MVC\Legacy\Event\PreBuildKernelWebHandlerEvent;
 use eZ\Publish\Core\MVC\Legacy\Event\PreBuildKernelEvent;
-use eZ\Publish\Core\MVC\Symfony\SiteAccess;
+use Ibexa\Core\MVC\Symfony\SiteAccess;
 use ezpKernelHandler;
 use ezpKernelRest;
 use ezpKernelTreeMenu;
@@ -76,7 +76,7 @@ class Loader
     private $requestStack;
 
     /**
-     * @var \eZ\Publish\Core\MVC\Symfony\SiteAccess
+     * @var \Ibexa\Core\MVC\Symfony\SiteAccess
      */
     private $siteAccess;
 

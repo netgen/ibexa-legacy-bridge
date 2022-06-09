@@ -16,34 +16,34 @@ class RelatedSiteAccessesCleanupPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        $configResolver = $container->get('ezpublish.config.resolver');
-        $relationMap = $container->getParameter('ezpublish.siteaccess.relation_map');
+        $configResolver = $container->get('ibexa.config.resolver');
+        $relationMap = $container->getParameter('ibexa.site_access.relation_map');
 
         // Exclude siteaccesses in legacy_mode (e.g. admin interface)
         foreach ($relationMap as $repository => &$saByRootLocation) {
             foreach ($saByRootLocation as $rootLocation => $saList) {
                 foreach ($saList as $i => $sa) {
-                    if ($configResolver->getParameter('legacy_mode', 'ezsettings', $sa) === true) {
+                    if ($configResolver->getParameter('legacy_mode', 'ibexa.site_access.config', $sa) === true) {
                         unset($saByRootLocation[$rootLocation][$i]);
                     }
                 }
             }
         }
-        $container->setParameter('ezpublish.siteaccess.relation_map', $relationMap);
+        $container->setParameter('ibexa.site_access.relation_map', $relationMap);
 
-        $saList = $container->getParameter('ezpublish.siteaccess.list');
+        $saList = $container->getParameter('ibexa.site_access.list');
         foreach ($saList as $sa) {
-            if ($configResolver->getParameter('legacy_mode', 'ezsettings', $sa) === true) {
+            if ($configResolver->getParameter('legacy_mode', 'ibexa.site_access.config', $sa) === true) {
                 continue;
             }
 
-            $relatedSAs = $configResolver->getParameter('related_siteaccesses', 'ezsettings', $sa);
+            $relatedSAs = $configResolver->getParameter('related_siteaccesses', 'ibexa.site_access.config', $sa);
             foreach ($relatedSAs as $i => $relatedSa) {
-                if ($configResolver->getParameter('legacy_mode', 'ezsettings', $relatedSa) === true) {
+                if ($configResolver->getParameter('legacy_mode', 'ibexa.site_access.config', $relatedSa) === true) {
                     unset($relatedSAs[$i]);
                 }
             }
-            $container->setParameter("ezsettings.$sa.related_siteaccesses", $relatedSAs);
+            $container->setParameter("ibexa.site_access.config.$sa.related_siteaccesses", $relatedSAs);
         }
     }
 }

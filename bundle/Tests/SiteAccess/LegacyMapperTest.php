@@ -8,7 +8,7 @@ namespace eZ\Bundle\EzPublishLegacyBundle\Tests\SiteAccess;
 
 use eZ\Publish\Core\MVC\Legacy\Tests\LegacyBasedTestCase;
 use eZ\Bundle\EzPublishLegacyBundle\LegacyMapper\SiteAccess as LegacyMapper;
-use eZ\Publish\Core\MVC\Symfony\SiteAccess;
+use Ibexa\Core\MVC\Symfony\SiteAccess;
 use eZ\Publish\Core\MVC\Legacy\Event\PreBuildKernelWebHandlerEvent;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
@@ -41,7 +41,7 @@ class LegacyMapperTest extends LegacyBasedTestCase
         $container
             ->expects($this->exactly(1))
             ->method('get')
-            ->with('ezpublish.siteaccess')
+            ->with(SiteAccess::class)
             ->will($this->returnValue($siteaccess));
 
         $request = $this->getRequestMock();
@@ -72,7 +72,7 @@ class LegacyMapperTest extends LegacyBasedTestCase
         $container
             ->expects($this->exactly(1))
             ->method('get')
-            ->with('ezpublish.siteaccess')
+            ->with(SiteAccess::class)
             ->will($this->returnValue($siteaccess));
 
         $request = $this->getRequestMock();

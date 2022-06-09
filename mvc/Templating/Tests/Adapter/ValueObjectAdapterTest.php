@@ -7,8 +7,8 @@
 namespace eZ\Publish\Core\MVC\Legacy\Templating\Tests\Adapter;
 
 use eZ\Publish\Core\MVC\Legacy\Templating\Adapter\ValueObjectAdapter;
-use eZ\Publish\Core\FieldType\Page\Parts\Zone;
-use eZ\Publish\API\Repository\Values\ValueObject;
+use Ibexa\Core\FieldType\Page\Parts\Zone;
+use Ibexa\Contracts\Core\Repository\Values\ValueObject;
 use PHPUnit\Framework\TestCase;
 
 class ValueObjectAdapterTest extends TestCase
@@ -66,7 +66,7 @@ class ValueObjectAdapterTest extends TestCase
     /**
      * Returns the adapter to test.
      *
-     * @param \eZ\Publish\API\Repository\Values\ValueObject $valueObject
+     * @param \Ibexa\Contracts\Core\Repository\Values\ValueObject $valueObject
      * @param array $map
      *
      * @return \eZ\Publish\Core\MVC\Legacy\Templating\Adapter\ValueObjectAdapter

@@ -8,7 +8,7 @@ namespace eZ\Bundle\EzPublishLegacyBundle\Tests\SetupWizard;
 
 use eZ\Publish\Core\MVC\Legacy\Tests\LegacyBasedTestCase;
 use eZ\Bundle\EzPublishLegacyBundle\SetupWizard\ConfigurationConverter;
-use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
+use Ibexa\Core\Base\Exceptions\InvalidArgumentException;
 use eZ\Publish\Core\MVC\Legacy\Kernel;
 use eZ\Bundle\EzPublishLegacyBundle\DependencyInjection\Configuration\LegacyConfigResolver;
 use Exception;
@@ -68,7 +68,7 @@ class ConfigurationConverterTest extends LegacyBasedTestCase
         }
 
         ksort($expectedResult);
-        ksort($expectedResult['ezpublish']);
+        ksort($expectedResult['ibexa']);
         self::assertEquals(
             $expectedResult,
             $result
@@ -134,7 +134,7 @@ class ConfigurationConverterTest extends LegacyBasedTestCase
                     ],
                 ],
             ],
-            'ezpublish' => [
+            'ibexa' => [
                 'repositories' => [
                     'eng_repository' => ['engine' => 'legacy', 'connection' => 'eng_repository_connection'],
                 ],
@@ -256,9 +256,9 @@ class ConfigurationConverterTest extends LegacyBasedTestCase
         // imagemagick disabled
         $element = $baseData;
         $element[IDX_MOCK_PARAMETERS]['getParameter']['ImageMagickIsEnabled'] = ['ImageMagick', 'IsEnabled', 'eng', 'image.ini', 'false'];
-        $element[IDX_EXPECTED_RESULT]['ezpublish']['imagemagick']['enabled'] = false;
-        unset($element[IDX_EXPECTED_RESULT]['ezpublish']['imagemagick']['path']);
-        unset($element[IDX_EXPECTED_RESULT]['ezpublish']['imagemagick']['filters']);
+        $element[IDX_EXPECTED_RESULT]['ibexa']['imagemagick']['enabled'] = false;
+        unset($element[IDX_EXPECTED_RESULT]['ibexa']['imagemagick']['path']);
+        unset($element[IDX_EXPECTED_RESULT]['ibexa']['imagemagick']['filters']);
         $data[] = $element;
 
         // postgresql
@@ -276,7 +276,7 @@ class ConfigurationConverterTest extends LegacyBasedTestCase
                 'HostMatchMapItems' => ['site.com;eng', 'admin.site.com;ezdemo_site_admin'],
             ],
         ];
-        $element[IDX_EXPECTED_RESULT]['ezpublish']['siteaccess']['match'] = [
+        $element[IDX_EXPECTED_RESULT]['ibexa']['siteaccess']['match'] = [
             'Map\\Host' => ['site.com' => 'eng', 'admin.site.com' => 'ezdemo_site_admin'],
         ];
         $data[] = $element;
@@ -290,7 +290,7 @@ class ConfigurationConverterTest extends LegacyBasedTestCase
                 'HostMatchMapItems' => ['site.com;eng', 'admin.site.com;ezdemo_site_admin'],
             ],
         ];
-        $element[IDX_EXPECTED_RESULT]['ezpublish']['siteaccess']['match'] = [
+        $element[IDX_EXPECTED_RESULT]['ibexa']['siteaccess']['match'] = [
             'Map\\Host' => ['site.com' => 'eng', 'admin.site.com' => 'ezdemo_site_admin'],
         ];
         $data[] = $element;
@@ -298,7 +298,7 @@ class ConfigurationConverterTest extends LegacyBasedTestCase
         // customized storage dir
         $element = $baseData;
         $element[IDX_MOCK_PARAMETERS]['getParameter']['FileSettingsStorageDir'] = ['FileSettings', 'StorageDir', 'site.ini', 'eng', 'customstorage'];
-        $element[IDX_EXPECTED_RESULT]['ezpublish']['system']['ezdemo_group']['storage_dir'] = 'customstorage';
+        $element[IDX_EXPECTED_RESULT]['ibexa']['system']['ezdemo_group']['storage_dir'] = 'customstorage';
         $data[] = $element;
 
         // host match, with map
@@ -340,7 +340,7 @@ class ConfigurationConverterTest extends LegacyBasedTestCase
         $element[IDX_MOCK_PARAMETERS]['getParameter']['Languages_demo'][4] = ['eng-GB', 'fre-FR'];
         $element[IDX_MOCK_PARAMETERS]['getParameter']['Languages_admin'][4] = ['eng-GB', 'fre-FR'];
 
-        $element[IDX_EXPECTED_RESULT]['ezpublish']['system']['ezdemo_group']['languages'] = ['eng-GB', 'fre-FR'];
+        $element[IDX_EXPECTED_RESULT]['ibexa']['system']['ezdemo_group']['languages'] = ['eng-GB', 'fre-FR'];
         $data[] = $element;
 
         // several languages and same list for all SA but not the same order
@@ -350,11 +350,11 @@ class ConfigurationConverterTest extends LegacyBasedTestCase
         $element[IDX_MOCK_PARAMETERS]['getParameter']['Languages_demo'][4] = ['fre-FR', 'eng-GB'];
         $element[IDX_MOCK_PARAMETERS]['getParameter']['Languages_admin'][4] = ['eng-GB', 'fre-FR'];
 
-        $element[IDX_EXPECTED_RESULT]['ezpublish']['system']['eng']['languages'] = ['eng-GB', 'fre-FR'];
-        $element[IDX_EXPECTED_RESULT]['ezpublish']['system']['ezdemo_site']['languages'] = ['fre-FR', 'eng-GB'];
-        $element[IDX_EXPECTED_RESULT]['ezpublish']['system']['ezdemo_site_admin']['languages'] = ['eng-GB', 'fre-FR'];
+        $element[IDX_EXPECTED_RESULT]['ibexa']['system']['eng']['languages'] = ['eng-GB', 'fre-FR'];
+        $element[IDX_EXPECTED_RESULT]['ibexa']['system']['ezdemo_site']['languages'] = ['fre-FR', 'eng-GB'];
+        $element[IDX_EXPECTED_RESULT]['ibexa']['system']['ezdemo_site_admin']['languages'] = ['eng-GB', 'fre-FR'];
 
-        unset($element[IDX_EXPECTED_RESULT]['ezpublish']['system']['ezdemo_group']['languages']);
+        unset($element[IDX_EXPECTED_RESULT]['ibexa']['system']['ezdemo_group']['languages']);
         $data[] = $element;
 
         // several languages and different lists for each SA
@@ -364,11 +364,11 @@ class ConfigurationConverterTest extends LegacyBasedTestCase
         $element[IDX_MOCK_PARAMETERS]['getParameter']['Languages_demo'][4] = ['Entish', 'Valarin', 'Elvish'];
         $element[IDX_MOCK_PARAMETERS]['getParameter']['Languages_admin'][4] = ['Khuzdul', 'Sindarin'];
 
-        $element[IDX_EXPECTED_RESULT]['ezpublish']['system']['eng']['languages'] = ['eng-GB', 'fre-FR'];
-        $element[IDX_EXPECTED_RESULT]['ezpublish']['system']['ezdemo_site']['languages'] = ['Entish', 'Valarin', 'Elvish'];
-        $element[IDX_EXPECTED_RESULT]['ezpublish']['system']['ezdemo_site_admin']['languages'] = ['Khuzdul', 'Sindarin'];
+        $element[IDX_EXPECTED_RESULT]['ibexa']['system']['eng']['languages'] = ['eng-GB', 'fre-FR'];
+        $element[IDX_EXPECTED_RESULT]['ibexa']['system']['ezdemo_site']['languages'] = ['Entish', 'Valarin', 'Elvish'];
+        $element[IDX_EXPECTED_RESULT]['ibexa']['system']['ezdemo_site_admin']['languages'] = ['Khuzdul', 'Sindarin'];
 
-        unset($element[IDX_EXPECTED_RESULT]['ezpublish']['system']['ezdemo_group']['languages']);
+        unset($element[IDX_EXPECTED_RESULT]['ibexa']['system']['ezdemo_group']['languages']);
         $data[] = $element;
 
         // session name
@@ -377,7 +377,7 @@ class ConfigurationConverterTest extends LegacyBasedTestCase
         $element[IDX_MOCK_PARAMETERS]['getParameter']['SessionNameHandler_demo'] = ['Session', 'SessionNameHandler', 'site.ini', 'ezdemo_site', 'custom'];
         $element[IDX_MOCK_PARAMETERS]['getParameter']['SessionNamePerSiteAccess_eng'] = ['Session', 'SessionNamePerSiteAccess', 'site.ini', 'eng', 'enabled'];
         $element[IDX_MOCK_PARAMETERS]['getParameter']['SessionNamePerSiteAccess_demo'] = ['Session', 'SessionNamePerSiteAccess', 'site.ini', 'ezdemo_site', 'disabled'];
-        $element[IDX_EXPECTED_RESULT]['ezpublish']['system']['ezdemo_site']['session'] = ['name' => 'eZSESSID'];
+        $element[IDX_EXPECTED_RESULT]['ibexa']['system']['ezdemo_site']['session'] = ['name' => 'eZSESSID'];
         $data[] = $element;
 
         return $data;

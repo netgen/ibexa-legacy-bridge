@@ -6,10 +6,10 @@
  */
 namespace eZ\Publish\Core\MVC\Legacy\View;
 
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
-use eZ\Publish\Core\MVC\Symfony\View\View;
-use eZ\Publish\Core\MVC\Symfony\View\ContentView;
-use eZ\Publish\Core\Base\Exceptions\InvalidArgumentType;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
+use Ibexa\Core\MVC\Symfony\View\View;
+use Ibexa\Core\MVC\Symfony\View\ContentView;
+use Ibexa\Core\Base\Exceptions\InvalidArgumentType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Controller\ControllerReference;
 use Twig\Environment;
@@ -17,7 +17,7 @@ use Twig\Environment;
 class TwigContentViewLayoutDecorator implements View
 {
     /**
-     * @var \eZ\Publish\Core\MVC\Symfony\View\ContentView
+     * @var \Ibexa\Core\MVC\Symfony\View\ContentView
      */
     protected $contentView;
 
@@ -37,7 +37,7 @@ class TwigContentViewLayoutDecorator implements View
     protected $configHash = [];
 
     /**
-     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
+     * @var \Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface
      */
     protected $configResolver;
 
@@ -66,7 +66,7 @@ class TwigContentViewLayoutDecorator implements View
     /**
      * Injects the content view object to decorate.
      *
-     * @param \eZ\Publish\Core\MVC\Symfony\View\ContentView $contentView
+     * @param \Ibexa\Core\MVC\Symfony\View\ContentView $contentView
      */
     public function setContentView(ContentView $contentView)
     {
@@ -77,11 +77,11 @@ class TwigContentViewLayoutDecorator implements View
      * Sets $templateIdentifier to the content view.
      * This decorator only supports closures.
      *
-     * Must throw a \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType exception if $templateIdentifier is invalid.
+     * Must throw a \Ibexa\Core\Base\Exceptions\InvalidArgumentType exception if $templateIdentifier is invalid.
      *
      * @param \Closure $templateIdentifier
      *
-     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentType
+     * @throws \Ibexa\Core\Base\Exceptions\InvalidArgumentType
      */
     public function setTemplateIdentifier($templateIdentifier)
     {
