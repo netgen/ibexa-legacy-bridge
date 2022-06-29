@@ -91,13 +91,14 @@ services:
 
     templating.engine.delegating:
         class: eZ\Publish\Core\MVC\Legacy\Templating\DelegatingEngine
-        public: false
+        public: true
         calls:
             - [addEngine, ["@templating.engine.twig"]]
             - [addEngine, ["@templating.engine.eztpl"]]
 
     templating:
         alias: templating.engine.delegating
+        public: true
 
     templating.name_parser:
         class: eZ\Publish\Core\MVC\Legacy\Templating\TemplateNameParser
