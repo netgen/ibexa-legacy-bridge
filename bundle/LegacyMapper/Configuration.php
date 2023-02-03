@@ -307,15 +307,16 @@ class Configuration implements EventSubscriberInterface
     private function getClusterSettings()
     {
         $clusterSettings = [];
-        if ($this->container->hasParameter('dfs_nfs_path')) {
+        if ($this->container->hasParameter('dfs_database_url')) {
+            $databaseSettings = parse_url($this->container->hasParameter('dfs_database_url'));
             $clusterSettings += [
                 'file.ini/ClusteringSettings/FileHandler' => 'eZDFSFileHandler',
                 'file.ini/eZDFSClusteringSettings/MountPointPath' => $this->container->getParameter('dfs_nfs_path'),
-                'file.ini/eZDFSClusteringSettings/DBHost' => $this->container->getParameter('dfs_database_host'),
-                'file.ini/eZDFSClusteringSettings/DBPort' => $this->container->getParameter('dfs_database_port'),
-                'file.ini/eZDFSClusteringSettings/DBName' => $this->container->getParameter('dfs_database_name'),
-                'file.ini/eZDFSClusteringSettings/DBUser' => $this->container->getParameter('dfs_database_user'),
-                'file.ini/eZDFSClusteringSettings/DBPassword' => $this->container->getParameter('dfs_database_password'),
+                'file.ini/eZDFSClusteringSettings/DBHost' => $databaseSettings['host'],
+                'file.ini/eZDFSClusteringSettings/DBPort' => $databaseSettings['port'] ?? 3306,
+                'file.ini/eZDFSClusteringSettings/DBName' => ltrim($databaseSettings['path'], '/'),
+                'file.ini/eZDFSClusteringSettings/DBUser' => $databaseSettings['user'] ?? '',
+                'file.ini/eZDFSClusteringSettings/DBPassword' => $databaseSettings['pass'] ?? '',
             ];
         }
 
