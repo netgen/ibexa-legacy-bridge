@@ -245,6 +245,10 @@ class Configuration implements EventSubscriberInterface
         // Aliases configuration
         $imageVariations = $this->configResolver->getParameter('image_variations');
         foreach ($imageVariations as $aliasName => $aliasSettings) {
+            if ($aliasName === 'original') {
+                continue;
+            }
+
             $imageSettings['image.ini/AliasSettings/AliasList'][] = $aliasName;
             if (isset($aliasSettings['reference'])) {
                 $imageSettings["image.ini/$aliasName/Reference"] = $aliasSettings['reference'];
