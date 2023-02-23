@@ -119,6 +119,7 @@ services:
         public: true
         arguments:
             - '@ibexa.api.service.content'
+            - '@ibexa.api.service.location'
             - "@http_kernel"
             - '@Ibexa\Core\Helper\ContentPreviewHelper'
             - "@security.authorization_checker"
