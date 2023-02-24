@@ -7,6 +7,7 @@
 namespace eZ\Bundle\EzPublishLegacyBundle;
 
 use eZ\Bundle\EzPublishLegacyBundle\DependencyInjection\Compiler\PageServicePass;
+use eZ\Bundle\EzPublishLegacyBundle\DependencyInjection\Compiler\PreviewControllerPass;
 use eZ\Bundle\EzPublishLegacyBundle\DependencyInjection\Compiler\RememberMeListenerPass;
 use eZ\Bundle\EzPublishLegacyBundle\DependencyInjection\Compiler\LegacyBundlesPass;
 use eZ\Bundle\EzPublishLegacyBundle\DependencyInjection\Compiler\LegacySessionPass;
@@ -51,6 +52,7 @@ class EzPublishLegacyBundle extends Bundle
         $container->addCompilerPass(new PageServicePass());
         $container->addCompilerPass(new RequestIndexListenerPass());
         $container->addCompilerPass(new SecurityListenerPass());
+        $container->addCompilerPass(new PreviewControllerPass());
 
         /** @var \Symfony\Bundle\SecurityBundle\DependencyInjection\SecurityExtension $securityExtension */
         $securityExtension = $container->getExtension('security');

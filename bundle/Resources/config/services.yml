@@ -114,30 +114,6 @@ services:
             - "@ezpublish_legacy.kernel.lazy_loader"
         parent: Ibexa\Core\MVC\Symfony\Controller\Controller
 
-    ezpublish_legacy.preview.controller:
-        class: eZ\Bundle\EzPublishLegacyBundle\Controller\PreviewController
-        public: true
-        arguments:
-            - '@ibexa.api.service.content'
-            - '@ibexa.api.service.location'
-            - "@http_kernel"
-            - '@Ibexa\Core\Helper\ContentPreviewHelper'
-            - "@security.authorization_checker"
-            - '@Ibexa\Core\Helper\PreviewLocationProvider'
-            - '@Ibexa\Core\MVC\Symfony\View\CustomLocationControllerChecker'
-        calls:
-            - [setConfigResolver, ["@ibexa.config.resolver"]]
-        tags:
-            - { name: controller.service_arguments }
-
-    ibexa.controller.content.preview:
-        alias: ezpublish_legacy.preview.controller
-        public: true
-
-    Ibexa\Core\MVC\Symfony\Controller\Content\PreviewController:
-        alias: ezpublish_legacy.preview.controller
-        public: true
-
     ezpublish_legacy.website_toolbar.controller:
         class: eZ\Bundle\EzPublishLegacyBundle\Controller\WebsiteToolbarController
         public: true
