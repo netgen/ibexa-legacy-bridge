@@ -7,6 +7,7 @@
 namespace eZ\Bundle\EzPublishLegacyBundle\Cache;
 
 use Ibexa\Contracts\HttpCache\PurgeClient\PurgeClientInterface;
+use Ibexa\Contracts\HttpCache\Handler\ContentTagInterface;
 
 /**
  * A PurgeClient decorator that allows the actual purger to be switched on/off.
@@ -30,6 +31,15 @@ class SwitchableHttpCachePurger implements PurgeClientInterface
         if ($this->isSwitchedOff()) {
             return;
         }
+
+        // Add the appropiate cache tag prefix for locations
+        $locationIds = array_map(
+            static function ($locationId) {
+                $locationId = is_numeric($locationId) ? ContentTagInterface::LOCATION_PREFIX . $locationId : $locationId;
+                return $locationId;
+            },
+            $locationIds
+        );
 
         $this->purgeClient->purge($locationIds);
     }
