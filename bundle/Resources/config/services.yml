@@ -228,7 +228,7 @@ services:
     ezpublish_legacy.switchable_http_cache_purger:
         class: eZ\Bundle\EzPublishLegacyBundle\Cache\SwitchableHttpCachePurger
         public: false
-        arguments: ["@ibexa.http_cache.purge_client"]
+        arguments: ["@ibexa.http_cache.purge_client", "@fos_http_cache.cache_manager"]
 
     ezpublish_legacy.content_exception_handler:
         class: eZ\Publish\Core\MVC\Legacy\EventListener\APIContentExceptionListener

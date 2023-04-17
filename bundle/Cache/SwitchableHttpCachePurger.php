@@ -8,6 +8,7 @@ namespace eZ\Bundle\EzPublishLegacyBundle\Cache;
 
 use Ibexa\Contracts\HttpCache\PurgeClient\PurgeClientInterface;
 use Ibexa\Contracts\HttpCache\Handler\ContentTagInterface;
+use FOS\HttpCacheBundle\CacheManager;
 
 /**
  * A PurgeClient decorator that allows the actual purger to be switched on/off.
@@ -21,9 +22,17 @@ class SwitchableHttpCachePurger implements PurgeClientInterface
      */
     private $purgeClient;
 
-    public function __construct(PurgeClientInterface $purgeClient)
+    public function __construct(PurgeClientInterface $purgeClient, CacheManager $cacheManager)
     {
         $this->purgeClient = $purgeClient;
+        $this->cacheManager = $cacheManager;
+    }
+
+    // FOSHttpCacheBundle has a listener on the kernel.terminate event that issues a flush() call
+    // However, legacy Ajax requests through ezjscore terminate execution before this event.
+    public function __destruct()
+    {
+        $this->cacheManager->flush();
     }
 
     public function purge(array $locationIds): void
