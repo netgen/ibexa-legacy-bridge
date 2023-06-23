@@ -308,7 +308,7 @@ class Configuration implements EventSubscriberInterface
     {
         $clusterSettings = [];
         if ($this->container->hasParameter('dfs_database_url')) {
-            $databaseSettings = parse_url($this->container->hasParameter('dfs_database_url'));
+            $databaseSettings = parse_url($this->container->getParameter('dfs_database_url'));
             $clusterSettings += [
                 'file.ini/ClusteringSettings/FileHandler' => 'eZDFSFileHandler',
                 'file.ini/eZDFSClusteringSettings/MountPointPath' => $this->container->getParameter('dfs_nfs_path'),
