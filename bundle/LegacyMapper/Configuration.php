@@ -316,7 +316,7 @@ class Configuration implements EventSubscriberInterface
                 'file.ini/eZDFSClusteringSettings/DBPort' => $databaseSettings['port'] ?? 3306,
                 'file.ini/eZDFSClusteringSettings/DBName' => ltrim($databaseSettings['path'], '/'),
                 'file.ini/eZDFSClusteringSettings/DBUser' => $databaseSettings['user'] ?? '',
-                'file.ini/eZDFSClusteringSettings/DBPassword' => $databaseSettings['pass'] ?? '',
+                'file.ini/eZDFSClusteringSettings/DBPassword' => urldecode($databaseSettings['pass']) ?? '',
             ];
         }
 
