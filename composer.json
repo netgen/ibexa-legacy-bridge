@@ -16,7 +16,7 @@
     "minimum-stability": "stable",
     "require": {
         "netgen/ezpublish-legacy-installer": "^2.2",
-        "netgen/ezpublish-legacy": "dev-ibexa4 || dev-ibexa-support",
+        "netgen/ezpublish-legacy": "dev-ibexa-support",
         "ibexa/core": "^4.4.1",
         "netgen/ibexa-xmltext-fieldtype": "^3.0",
         "netgen/richtext-datatype-bundle": "^2.0",
